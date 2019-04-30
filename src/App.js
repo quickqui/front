@@ -28,8 +28,8 @@ class App extends Component {
 
         return (
             <Admin dataProvider={dataProvider}>
-                <Resource name="Post" list={ListGuesser} show={ShowGuesser}/>
-                <Resource name="User" list={ListGuesser} show={ShowGuesser}/>
+                <Resource name="Post" list={PostList} show={ShowGuesser}/>
+                <Resource name="User" list={UserList} show={ShowGuesser}/>
             </Admin>
         );
     }
