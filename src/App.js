@@ -1,10 +1,10 @@
 // in App.js
 import React, { Component } from 'react';
 import buildOpenCrudProvider from 'ra-data-opencrud';
-import { Admin, Resource, ShowGuesser, ListGuesser } from 'react-admin';
-import { PostList } from './Post'
-import { UserList } from './User'
+import { Admin, Resource ,EditGuesser} from 'react-admin';
 import {ListQuick} from './ListQuick';
+import {ShowQuick} from './ShowQuick'
+import {EditQuick} from './EditQuick'
 
 // import { PostCreate, PostEdit, PostList } from './posts';
 
@@ -15,9 +15,9 @@ import {ListQuick} from './ListQuick';
         this.state = { dataProvider: null, dataModel: null };
     }
     componentDidMount() {
-        buildOpenCrudProvider({ clientOptions: { uri: 'http://localhost:4466' } })
+        buildOpenCrudProvider({ clientOptions: { uri: '/prisma' } })
             .then(dataProvider => this.setState({ dataProvider }));
-        fetch("http://localhost:1111").then(res => res.json())
+        fetch("/model-server/dataModel").then(res => res.json())
             .then(data => {
                 console.log(data)
                 this.setState({ dataModel: data })
@@ -35,7 +35,8 @@ import {ListQuick} from './ListQuick';
             <Admin dataProvider={dataProvider}>
                 {
                     dataModel.types && dataModel.types.map(t => {
-                        return <Resource options={{dataModel}} name={t.name} key={t.name} list={ListQuick} show={ShowGuesser} />
+                        return <Resource options={{dataModel}} name={t.name} key={t.name}
+                         list={ListQuick} show={ShowQuick} edit={EditQuick}/>
                     })
                 }
             </Admin>

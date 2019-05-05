@@ -1,5 +1,5 @@
 {
-  "name": "test-admin",
+  "name": "quickqui-front",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,6 +8,7 @@
     "@types/react": "^16.8.15",
     "@types/react-dom": "^16.8.4",
     "graphql": "^14.2.1",
+    "http-proxy-middleware": "^0.19.1",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^2.8.6",
     "ra-data-opencrud": "^0.0.7",
