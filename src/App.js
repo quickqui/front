@@ -1,15 +1,16 @@
 // in App.js
 import React, { Component } from 'react';
 import buildOpenCrudProvider from 'ra-data-opencrud';
-import { Admin, Resource ,EditGuesser} from 'react-admin';
-import {ListQuick} from './ListQuick';
-import {ShowQuick} from './ShowQuick'
-import {EditQuick} from './EditQuick'
+import { Admin, Resource, EditGuesser } from 'react-admin';
+import { ListQuick } from './View/ListQuick';
+import { ShowQuick } from './View/ShowQuick'
+import { EditQuick } from './View/EditQuick'
+import { CreateQuick } from './View/CreateQuick';
 
 // import { PostCreate, PostEdit, PostList } from './posts';
 
 // const client = new ApolloClient();
- class App extends Component {
+class App extends Component {
     constructor() {
         super()
         this.state = { dataProvider: null, dataModel: null };
@@ -25,18 +26,18 @@ import {EditQuick} from './EditQuick'
     }
 
     render() {
-        const { dataProvider ,dataModel} = this.state;
+        const { dataProvider, dataModel } = this.state;
 
         if (!dataProvider || !dataModel) {
             return <div>Loading</div>;
         }
-        
+
         return (
             <Admin dataProvider={dataProvider}>
                 {
                     dataModel.types && dataModel.types.map(t => {
-                        return <Resource options={{dataModel}} name={t.name} key={t.name}
-                         list={ListQuick} show={ShowQuick} edit={EditQuick}/>
+                        return <Resource options={{ dataModel }} name={t.name} key={t.name}
+                            list={ListQuick} show={ShowQuick} edit={EditQuick} create={CreateQuick} />
                     })
                 }
             </Admin>

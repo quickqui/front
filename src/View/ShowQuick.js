@@ -3,20 +3,13 @@ import React from 'react';
 import {
     TextField, Datagrid, Show, SimpleShowLayout,
     ReferenceArrayField, ReferenceField, ArrayField,
-    FunctionField, SingleFieldList, ChipField, ShowButton
+    FunctionField
 } from 'react-admin'
+import { SimpleTable } from '../Component/SampleTable'
+import { scalarField } from '../Component/ScalarField';
+import { getBriefFieldName } from '../DataModel';
 
 
-const SimpleTable = props => {
-    const { options, field } = props
-    const { dataModel } = options
-    const relationType = (dataModel && dataModel.types && dataModel.types.find((ty) => ty.name === field.typeName.name))
-    return <Datagrid {...props}>{
-        relationType.fields.map(f => <TextField source={f.name} {...props} />)
-    }
-        <ShowButton />
-    </Datagrid>
-}
 
 export const ShowQuick = props => {
     const { options, resource } = props
@@ -32,7 +25,7 @@ export const ShowQuick = props => {
                         </ReferenceArrayField>)
                     } else {
                         return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeName.name} linkType="show">
-                            <TextField source="name" />
+                            <TextField source={getBriefFieldName(dataModel,field.typeName)} />
                         </ReferenceField>
                     }
                 }
@@ -41,7 +34,10 @@ export const ShowQuick = props => {
                         return <ArrayField source={field.name}>
                             <Datagrid>
                                 {/* //TODO 加入类似 Chip的外观 */}
-                                <FunctionField render={record => record + ""} />
+                                {/* <ScalarField source="__self" field={field}/> */}
+                                {/* {scalarField({source:"__self",field,...props})} */}
+                                <FunctionField render={record => JSON.stringify(record)} />
+
                             </Datagrid>
                         </ArrayField>
                     } else {
@@ -52,8 +48,9 @@ export const ShowQuick = props => {
                         </ArrayField>
                     }
                 }
-
-                return <TextField source={field.name} key={field.name} />
+                //  return <TextField   source={field.name} key={field.name}/>
+                // return <ScalarField field={field} source={field.name} key={field.name} {...props}/>
+                return scalarField({ field, source: field.name, key: field.name })
             }
             )
         }
