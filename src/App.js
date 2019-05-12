@@ -1,15 +1,13 @@
 // in App.js
 import React, { Component } from 'react';
 import buildOpenCrudProvider from 'ra-data-opencrud';
-import { Admin, Resource, EditGuesser } from 'react-admin';
+import { Admin, Resource } from 'react-admin';
 import { ListQuick } from './View/ListQuick';
 import { ShowQuick } from './View/ShowQuick'
 import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
 
-// import { PostCreate, PostEdit, PostList } from './posts';
 
-// const client = new ApolloClient();
 class App extends Component {
     constructor() {
         super()

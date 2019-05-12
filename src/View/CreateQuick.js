@@ -1,9 +1,9 @@
 
 import React from 'react';
 import {
-    Create, SimpleForm, TextInput, TextField,SelectArrayInput,
-    ArrayInput, ReferenceArrayInput, SelectInput,
-    ReferenceInput, SimpleFormIterator, DisabledInput, Datagrid, FunctionField, ArrayField
+    Create, SimpleForm, SelectArrayInput,
+    ReferenceArrayInput, SelectInput,
+    ReferenceInput, DisabledInput, Datagrid, FunctionField, ArrayField
 } from 'react-admin';
 import { scalarInput } from '../Component/ScalarInput'
 import { getBriefFieldName } from '../DataModel';
@@ -19,19 +19,13 @@ export const CreateQuick = props => {
                 if (field.flags.includes("relation")) {
                     if (field.typeName.isList) {
                         return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeName.name} >
-                            <SelectArrayInput optionText={getBriefFieldName(dataModel,field.typeName)} />
+                            <SelectArrayInput optionText={getBriefFieldName(dataModel, field.typeName)} />
                         </ReferenceArrayInput>
                     } else {
 
                         return <ReferenceInput label={field.name} source={field.name + ".id"} reference={field.typeName.name} >
-                            <SelectInput optionText={getBriefFieldName(dataModel,field.typeName)} />
+                            <SelectInput optionText={getBriefFieldName(dataModel, field.typeName)} />
                         </ReferenceInput>
-
-
-
-                        // return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeName.name} linkType="show">
-                        //     <TextField source="name" />
-                        // </ReferenceField>
                     }
                 }
                 if (field.typeName.isList) {
@@ -51,14 +45,10 @@ export const CreateQuick = props => {
                         </ArrayField>
                     }
                 }
-                //  return <TextField   source={field.name} key={field.name}/>
-                // return <ScalarField field={field} source={field.name} key={field.name} {...props}/>
 
                 if (field.flags.includes("id")) {
                     return DisabledInput({ field, source: field.name, key: field.name })
                 }
-
-
                 return scalarInput({ field, source: field.name, key: field.name })
             }
             )

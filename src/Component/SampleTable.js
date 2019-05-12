@@ -7,7 +7,7 @@ export const SimpleTable = (props) => {
     const { dataModel } = options
     const relationType = (dataModel && dataModel.types && dataModel.types.find((ty) => ty.name === field.typeName.name))
     return <Datagrid {...props}>{
-        relationType.fields.map((f) => scalarField({ field:f, source: f.name, key: f.name, ...props }))
+        relationType.fields.map((f) => scalarField({ field: f, source: f.name, key: f.name, ...props }))
     }
         <ShowButton />
     </Datagrid>

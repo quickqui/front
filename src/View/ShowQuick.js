@@ -1,13 +1,15 @@
 
 import React from 'react';
 import {
-    TextField, Datagrid, Show, SimpleShowLayout,
+    TextField, Show, SimpleShowLayout,
     ReferenceArrayField, ReferenceField, ArrayField,
-    FunctionField
+    ChipField, SingleFieldList
+
 } from 'react-admin'
 import { SimpleTable } from '../Component/SampleTable'
 import { scalarField } from '../Component/ScalarField';
 import { getBriefFieldName } from '../DataModel';
+import { StringToLabelObject } from '../Component/StringComponet'
 
 
 
@@ -25,31 +27,29 @@ export const ShowQuick = props => {
                         </ReferenceArrayField>)
                     } else {
                         return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeName.name} linkType="show">
-                            <TextField source={getBriefFieldName(dataModel,field.typeName)} />
+                            <TextField source={getBriefFieldName(dataModel, field.typeName)} />
                         </ReferenceField>
                     }
                 }
                 if (field.typeName.isList) {
                     if (field.typeName.isScalar) {
                         return <ArrayField source={field.name}>
-                            <Datagrid>
-                                {/* //TODO 加入类似 Chip的外观 */}
-                                {/* <ScalarField source="__self" field={field}/> */}
-                                {/* {scalarField({source:"__self",field,...props})} */}
-                                <FunctionField render={record => JSON.stringify(record)} />
-
-                            </Datagrid>
+                            <SingleFieldList linkType={false}>
+                                <StringToLabelObject>
+                                    <ChipField source="_label" />
+                                </StringToLabelObject>
+                            </SingleFieldList>
                         </ArrayField>
                     } else {
                         return <ArrayField source={field.name}>
-                            <Datagrid>
-                                <FunctionField render={record => JSON.stringify(record)} />
-                            </Datagrid>
+                            <SingleFieldList linkType={false}>
+                                <StringToLabelObject render={record => JSON.stringify(record)} >
+                                    <ChipField source="_label" />
+                                </StringToLabelObject>
+                            </SingleFieldList>
                         </ArrayField>
                     }
                 }
-                //  return <TextField   source={field.name} key={field.name}/>
-                // return <ScalarField field={field} source={field.name} key={field.name} {...props}/>
                 return scalarField({ field, source: field.name, key: field.name })
             }
             )

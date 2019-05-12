@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, ReferenceField, TextField, ShowButton, EditButton, ReferenceArrayField, SingleFieldList, ChipField, ArrayField, FunctionField } from 'react-admin';
+import { List, Datagrid, ReferenceField, ShowButton, EditButton, FunctionField } from 'react-admin';
 import { scalarField } from '../Component/ScalarField';
 import { getBriefFieldName } from '../DataModel';
 
@@ -20,7 +20,7 @@ export const ListQuick = (props) => {
                             return <FunctionField label={field.name + " - Count"} render={record => (record[field.name] && record[field.name].length) || 0} />
                         } else {
                             return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeName.name} linkType="show">
-                                {scalarField({ field, source: getBriefFieldName(dataModel,field.typeName)} )}
+                                {scalarField({ field, source: getBriefFieldName(dataModel, field.typeName) })}
                             </ReferenceField>
                         }
                     }
