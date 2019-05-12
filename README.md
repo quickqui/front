@@ -1,6 +1,6 @@
 # Front
 
-Front项目在QuickQui项目中负责前端展现。总体设计主要看QuickQui项目的文档 - https://github.com/quickqui/main
+Front项目在QuickQui项目群中负责前端展现。总体设计主要看QuickQui项目的文档 - https://github.com/quickqui/main
 
 
 ## CRUD
