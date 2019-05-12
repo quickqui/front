@@ -1,12 +1,12 @@
 
 import React from 'react';
 import {
-    Edit, SimpleForm, SelectArrayInput,
-    ReferenceArrayInput, SelectInput,
-    ReferenceInput, DisabledInput, Datagrid, FunctionField, ArrayField
-} from 'react-admin';
+    Edit, SimpleForm, SelectArrayInput,ReferenceArrayInput, SelectInput,ReferenceInput, DisabledInput, ArrayField
+    , ChipField, SingleFieldList} from 'react-admin';
 import { scalarInput } from '../Component/ScalarInput'
 import { getBriefFieldName } from '../DataModel';
+import { StringToLabelObject } from '../Component/StringComponet'
+
 
 
 export const EditQuick = props => {
@@ -31,23 +31,22 @@ export const EditQuick = props => {
                 if (field.typeName.isList) {
                     if (field.typeName.isScalar) {
                         return <ArrayField source={field.name}>
-                            <Datagrid>
-                                {/* //TODO 这个咋搞？ */}
-                                <FunctionField render={record => JSON.stringify(record)} />
-
-                            </Datagrid>
+                            <SingleFieldList linkType={false}>
+                                <StringToLabelObject>
+                                    <ChipField source="_label" />
+                                </StringToLabelObject>
+                            </SingleFieldList>
                         </ArrayField>
                     } else {
                         return <ArrayField source={field.name}>
-                            <Datagrid>
-                                <FunctionField render={record => JSON.stringify(record)} />
-                            </Datagrid>
+                            <SingleFieldList linkType={false}>
+                                <StringToLabelObject render={record => JSON.stringify(record)} >
+                                    <ChipField source="_label" />
+                                </StringToLabelObject>
+                            </SingleFieldList>
                         </ArrayField>
                     }
                 }
-                //  return <TextField   source={field.name} key={field.name}/>
-                // return <ScalarField field={field} source={field.name} key={field.name} {...props}/>
-
                 if (field.flags.includes("id")) {
                     return DisabledInput({ field, source: field.name, key: field.name })
                 }
