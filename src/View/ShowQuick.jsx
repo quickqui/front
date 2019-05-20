@@ -8,31 +8,30 @@ import {
 } from 'react-admin'
 import { SimpleTable } from '../Component/SampleTable'
 import { scalarField } from '../Component/ScalarField';
-import { getBriefFieldName } from '../DataModel';
 import { StringToLabelObject } from '../Component/StringComponet'
 
 
 
 export const ShowQuick = props => {
     const { options, resource } = props
-    const { dataModel } = options
-    const type = (dataModel && dataModel.types && dataModel.types.find((ty) => ty.name == resource))
+    const { model } = options
+    const type = (model && model.types && model.types.find((ty) => ty.name === resource))
     return <Show {...props}>
         <SimpleShowLayout>{
             type.fields.map(field => {
                 if (field.flags.includes("relation")) {
-                    if (field.typeName.isList) {
-                        return (<ReferenceArrayField reference={field.typeName.name} linkType="show" source={field.name + "Ids"}>
+                    if (field.typeRef.isList) {
+                        return (<ReferenceArrayField reference={field.typeRef.name} linkType="show" source={field.name + "Ids"}>
                             <SimpleTable field={field} {...props} />
                         </ReferenceArrayField>)
                     } else {
-                        return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeName.name} linkType="show">
-                            <TextField source={getBriefFieldName(dataModel, field.typeName)} />
+                        return <ReferenceField label={field.name} source={field.name + ".id"} reference={field.typeRef.name} linkType="show">
+                            <TextField source={model.getBriefFieldName( field.typeRef)} />
                         </ReferenceField>
                     }
                 }
-                if (field.typeName.isList) {
-                    if (field.typeName.isScalar) {
+                if (field.typeRef.isList) {
+                    if (field.typeRef.isScalar) {
                         return <ArrayField source={field.name}>
                             <SingleFieldList linkType={false}>
                                 <StringToLabelObject>

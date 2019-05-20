@@ -10,10 +10,10 @@ export const scalarField = (prop) => {
     // }
     const { field } = prop
     // const{dataModel} = options
-    if (field.typeName.name === "Boolean") {
+    if (field.typeRef.name === "Boolean") {
         return <BooleanField {...prop} />
     }
-    if (field.typeName.name === "DateTime") {
+    if (field.typeRef.name === "DateTime") {
         return <DateField {...prop} />
     }
     return <TextField {...prop} />

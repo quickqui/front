@@ -3,7 +3,9 @@ const proxy = require('http-proxy-middleware');
 module.exports = function (app) {
     app.use(proxy('/model-server', {
         target: 'http://model-server:1111', pathRewrite: {
-            '^/model-server/dataModel': '/dataModel'
+            '^/model-server/dataModel': '/dataModel',
+            '^/model-server/model':'/model',
+            '^/model-server/deploy': '/deploy'
         }
     }));
     app.use(proxy('/prisma', {

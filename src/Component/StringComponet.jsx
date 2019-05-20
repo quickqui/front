@@ -1,6 +1,6 @@
 import { cloneElement } from 'react'
-export const StringToLabelObject = ({ record, render, children, ...rest }) =>
+export const StringToLabelObject = ({ record , render, children, ...rest }) =>
     cloneElement(children, {
         record: { _label: render ? render(record) : record },
-        ...rest,
+        ...rest
     })

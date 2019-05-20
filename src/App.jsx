@@ -6,6 +6,7 @@ import { ListQuick } from './View/ListQuick';
 import { ShowQuick } from './View/ShowQuick'
 import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
+import { Model } from './Model';
 
 
 class App extends Component {
@@ -16,25 +17,25 @@ class App extends Component {
     componentDidMount() {
         buildOpenCrudProvider({ clientOptions: { uri: '/prisma' } })
             .then(dataProvider => this.setState({ dataProvider }));
-        fetch("/model-server/dataModel").then(res => res.json())
+        fetch("/model-server/model").then(res => res.json())
             .then(data => {
                 console.log(data)
-                this.setState({ dataModel: data })
+                this.setState({ model: new Model(data) })
             })
     }
 
     render() {
-        const { dataProvider, dataModel } = this.state;
+        const { dataProvider, model } = this.state;
 
-        if (!dataProvider || !dataModel) {
+        if (!dataProvider || !model) {
             return <div>Loading</div>;
         }
 
         return (
             <Admin dataProvider={dataProvider}>
                 {
-                    dataModel.types && dataModel.types.map(t => {
-                        return <Resource options={{ dataModel }} name={t.name} key={t.name}
+                    model.types && model.types.map(t => {
+                        return <Resource options={{ model }} name={t.name} key={t.name}
                             list={ListQuick} show={ShowQuick} edit={EditQuick} create={CreateQuick} />
                     })
                 }

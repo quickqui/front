@@ -1,35 +1,36 @@
 
 import React from 'react';
 import {
-    Edit, SimpleForm, SelectArrayInput,ReferenceArrayInput, SelectInput,ReferenceInput, DisabledInput, ArrayField
-    , ChipField, SingleFieldList} from 'react-admin';
+    Create, SimpleForm, SelectArrayInput,
+    ReferenceArrayInput, SelectInput,
+    ReferenceInput, DisabledInput, ArrayField
+} from 'react-admin';
+import { ChipField, SingleFieldList } from 'react-admin';
 import { scalarInput } from '../Component/ScalarInput'
-import { getBriefFieldName } from '../DataModel';
 import { StringToLabelObject } from '../Component/StringComponet'
 
 
-
-export const EditQuick = props => {
+export const CreateQuick = props => {
     const { options, resource } = props
-    const { dataModel } = options
-    const type = (dataModel && dataModel.types && dataModel.types.find((ty) => ty.name == resource))
-    return <Edit {...props}>
+    const { model } = options
+    const type = (model && model.types && model.types.find((ty) => ty.name === resource))
+    return <Create {...props}>
         <SimpleForm>{
+
             type.fields.map(field => {
                 if (field.flags.includes("relation")) {
-                    if (field.typeName.isList) {
-                        return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeName.name} >
-                            <SelectArrayInput optionText={getBriefFieldName(dataModel, field.typeName)} />
+                    if (field.typeRef.isList) {
+                        return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeRef.name} >
+                            <SelectArrayInput optionText={model.getBriefFieldName(field.typeRef)} />
                         </ReferenceArrayInput>
                     } else {
-
-                        return <ReferenceInput label={field.name} source={field.name + ".id"} reference={field.typeName.name} >
-                            <SelectInput optionText={getBriefFieldName(dataModel, field.typeName)} />
+                        return <ReferenceInput label={field.name} source={field.name + ".id"} reference={field.typeRef.name} >
+                            <SelectInput optionText={model.getBriefFieldName(field.typeRef)} />
                         </ReferenceInput>
                     }
                 }
-                if (field.typeName.isList) {
-                    if (field.typeName.isScalar) {
+                if (field.typeRef.isList) {
+                    if (field.typeRef.isScalar) {
                         return <ArrayField source={field.name}>
                             <SingleFieldList linkType={false}>
                                 <StringToLabelObject>
@@ -57,5 +58,5 @@ export const EditQuick = props => {
             )
         }
         </SimpleForm>
-    </Edit>
+    </Create>
 }
