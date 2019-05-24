@@ -7,6 +7,8 @@ import { ShowQuick } from './View/ShowQuick'
 import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
 import { Model } from './Model';
+import Menu from './View/Menu';
+import customRoutes from './customRoutes';
 
 
 class App extends Component {
@@ -32,7 +34,7 @@ class App extends Component {
         }
 
         return (
-            <Admin dataProvider={dataProvider}>
+            <Admin   customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider}>
                 {
                     model.types && model.types.map(t => {
                         return <Resource options={{ model }} name={t.name} key={t.name}

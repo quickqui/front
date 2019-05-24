@@ -1,4 +1,5 @@
 import { DataModel, Type, Field, TypeRef } from "./DataModel";
+import { FunctionModel ,Function} from "./FunctionModel"; 
 
 interface FieldP extends Field {
     flags: string[]
@@ -8,8 +9,10 @@ interface FieldP extends Field {
 export class Model {
 
     dataModel!: DataModel
-    constructor(model:{dataModel:DataModel}) {
+    functionModel!: FunctionModel
+    constructor(model:{dataModel:DataModel,functionModel:FunctionModel}) {
         this.dataModel = model.dataModel
+        this.functionModel =  model.functionModel
         this.dataModel.types.flatMap(t => t.fields).forEach(
             (field: Field) => {
                 const fp = field as FieldP
@@ -27,7 +30,11 @@ export class Model {
     }
 
     public get types(): Type[] {
-        return this.dataModel.types
+        return this.dataModel.types || []
+    }
+
+    public get functions() : Function[]{
+        return this.functionModel.functions || []
     }
 
 
