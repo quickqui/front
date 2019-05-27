@@ -2,6 +2,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { FunctionList } from './View/FunctionList';
+import { FunctionEdit } from './View/FunctionEdit';
 
 
 export default function (model) {
@@ -11,6 +12,11 @@ export default function (model) {
             if (base.crud === 'list')
                 return (<Route exact path={"/" + fun.name} render={(props) =>
                     <FunctionList functionModel={model.functionModel.functions[0]} model={model} {...props} />
+                }
+                />)
+            if (base.crud === 'edit')
+                return (<Route exact path={"/" + fun.name} render={(props) =>
+                    <FunctionEdit functionModel={model.functionModel.functions[0]} model={model} {...props} />
                 }
                 />)
             else {

@@ -5,7 +5,25 @@ import * as _ from 'lodash';
 
 
 
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
+
+const FunctionButton = ({ record, functionModel }) => {
+    console.log(functionModel)
+    return (
+        <Button
+            color = 'primary'
+            component={Link}
+            to={{
+                pathname: "/"+functionModel.name,
+                state: {id:record.id, prefill: functionModel.prefill },
+            }}
+        >
+            {functionModel.name}
+        </Button>
+    )
+};
 
 export const FunctionList = (props) => {
     const { model, functionModel } = props
@@ -16,11 +34,15 @@ export const FunctionList = (props) => {
     const sort = functionModel.sort && _(functionModel.sort).map((value, key) => {
         return { "field": key, "order": value }
     }).value()[0]
-    console.log(_(functionModel.sort).map((value, key) => {
-        return { "field": key, "order": value }
-    }))
-    console.log(sort)
+    // console.log(_(functionModel.sort).map((value, key) => {
+    //     return { "field": key, "order": value }
+    // }))
+    // console.log(sort)
     const type = (model && model.types && model.types.find((ty) => ty.name === resource))
+
+
+
+
     //TODO  目前filter只能是key、value的形式，不能实现表达式方式。需要试一下其他方式。
     return <List location={location} basePath={basePath} resource={resource}
         filter={filter}
@@ -45,8 +67,15 @@ export const FunctionList = (props) => {
                     return scalarField({ field, source: field.name, key: field.name })
                 })
             }
-            <ShowButton />
-            <EditButton />
+            {
+                functionModel.actions && functionModel.actions.map((action) => {
+                    const actionFun = model.functions.find((fun) => fun.name === action)
+                    if (actionFun) {
+                        return <FunctionButton functionModel={actionFun} />
+                    }
+                })
+            }
+            
         </Datagrid>
     </List>
 }

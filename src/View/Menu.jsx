@@ -22,7 +22,7 @@ const Menu = (props) => {
         ))}
 
         {
-            model.functions.map((fun)=>{
+            model.functions.filter((fun)=> fun.base.crud === 'list' ).map((fun)=>{
                 return <MenuItemLink
                 to={"/"+fun.name}
                 primaryText={fun.name}
