@@ -34,7 +34,7 @@ class App extends Component {
         }
 
         return (
-            <Admin   customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider}>
+            <Admin customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider}>
                 {
                     model.types && model.types.map(t => {
                         return <Resource options={{ model }} name={t.name} key={t.name}

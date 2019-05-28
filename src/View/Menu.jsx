@@ -13,7 +13,7 @@ const Menu = (props) => {
     return (
     <div>
         {resources.map(resource => (
-            <MenuItemLink
+            <MenuItemLink key={resource.name}
                 to={`/${resource.name}`}
                 primaryText={resource.name}
                 // leftIcon={createElement(resource.icon)}
@@ -23,7 +23,7 @@ const Menu = (props) => {
 
         {
             model.functions.filter((fun)=> fun.base.crud === 'list' ).map((fun)=>{
-                return <MenuItemLink
+                return <MenuItemLink key={fun.name}
                 to={"/"+fun.name}
                 primaryText={fun.name}
                 // leftIcon={<LabelIcon />}

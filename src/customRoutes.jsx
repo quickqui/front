@@ -10,12 +10,12 @@ export default function (model) {
         model.functionModel.functions.map((fun) => {
             const base = fun.base
             if (base.crud === 'list')
-                return (<Route exact path={"/" + fun.name} render={(props) =>
+                return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) =>
                     <FunctionList functionModel={model.functionModel.functions[0]} model={model} {...props} />
                 }
                 />)
             if (base.crud === 'edit')
-                return (<Route exact path={"/" + fun.name} render={(props) =>
+                return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) => 
                     <FunctionEdit functionModel={model.functionModel.functions[0]} model={model} {...props} />
                 }
                 />)

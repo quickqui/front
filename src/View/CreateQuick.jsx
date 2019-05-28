@@ -7,7 +7,7 @@ import {
 } from 'react-admin';
 import { ChipField, SingleFieldList } from 'react-admin';
 import { scalarInput } from '../Component/ScalarInput'
-import { StringToLabelObject } from '../Component/StringComponet'
+import { StringComponent } from '../Component/StringComponet'
 
 
 export const CreateQuick = props => {
@@ -20,30 +20,30 @@ export const CreateQuick = props => {
             type.fields.map(field => {
                 if (field.flags.includes("relation")) {
                     if (field.typeRef.isList) {
-                        return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeRef.name} >
+                        return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeRef.name} key={field.name}>
                             <SelectArrayInput optionText={model.getBriefFieldName(field.typeRef)} />
                         </ReferenceArrayInput>
                     } else {
-                        return <ReferenceInput label={field.name} source={field.name + ".id"} reference={field.typeRef.name} >
+                        return <ReferenceInput label={field.name} source={field.name + ".id"} reference={field.typeRef.name} key={field.name}>
                             <SelectInput optionText={model.getBriefFieldName(field.typeRef)} />
                         </ReferenceInput>
                     }
                 }
                 if (field.typeRef.isList) {
                     if (field.typeRef.isScalar) {
-                        return <ArrayField source={field.name}>
+                        return <ArrayField source={field.name} key={field.name}>
                             <SingleFieldList linkType={false}>
-                                <StringToLabelObject>
+                                <StringComponent>
                                     <ChipField source="_label" />
-                                </StringToLabelObject>
+                                </StringComponent>
                             </SingleFieldList>
                         </ArrayField>
                     } else {
-                        return <ArrayField source={field.name}>
+                        return <ArrayField source={field.name} key={field.name}>
                             <SingleFieldList linkType={false}>
-                                <StringToLabelObject render={record => JSON.stringify(record)} >
+                                <StringComponent render={record => JSON.stringify(record)} >
                                     <ChipField source="_label" />
-                                </StringToLabelObject>
+                                </StringComponent>
                             </SingleFieldList>
                         </ArrayField>
                     }

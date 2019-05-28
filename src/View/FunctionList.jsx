@@ -10,14 +10,13 @@ import { Link } from 'react-router-dom';
 
 
 const FunctionButton = ({ record, functionModel }) => {
-    console.log(functionModel)
     return (
         <Button
-            color = 'primary'
+            color='primary'
             component={Link}
             to={{
-                pathname: "/"+functionModel.name,
-                state: {id:record.id, prefill: functionModel.prefill },
+                pathname: "/" + functionModel.name,
+                state: { id: record.id, prefill: functionModel.prefill },
             }}
         >
             {functionModel.name}
@@ -45,6 +44,7 @@ export const FunctionList = (props) => {
 
     //TODO  目前filter只能是key、value的形式，不能实现表达式方式。需要试一下其他方式。
     return <List location={location} basePath={basePath} resource={resource}
+        hasCreate={false} hasEdit={false} hasList={false} hasShow={false}
         filter={filter}
         sort={sort}
         {...props}>
@@ -56,7 +56,7 @@ export const FunctionList = (props) => {
                             //NOTE list里面一对多不要全部展示出来，展示一个count。真正的关联在Show或者Edit去做。
                             return <FunctionField key={field.name} label={field.name + " - Count"} render={record => (record[field.name] && record[field.name].length) || 0} />
                         } else {
-                            return <ReferenceField label={field.name} key={field.name} source={field.name + ".id"} reference={field.typeRef.name} linkType="show">
+                            return <ReferenceField key={field.name} label={field.name} source={field.name + ".id"} reference={field.typeRef.name} linkType="show">
                                 {scalarField({ field, key: field.name, source: model.getBriefFieldName(field.typeRef) })}
                             </ReferenceField>
                         }
@@ -71,11 +71,13 @@ export const FunctionList = (props) => {
                 functionModel.actions && functionModel.actions.map((action) => {
                     const actionFun = model.functions.find((fun) => fun.name === action)
                     if (actionFun) {
-                        return <FunctionButton functionModel={actionFun} />
+                        return <FunctionButton key={actionFun.name} functionModel={actionFun} />
+                    }else{
+                        return undefined
                     }
                 })
             }
-            
+
         </Datagrid>
     </List>
 }
