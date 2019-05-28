@@ -13,4 +13,9 @@ module.exports = function (app) {
             '^/prisma': '/'
         }
     }))
+    app.use(proxy('/app', {
+        target: 'http://app-server:4000', pathRewrite: {
+            '^/app': '/'
+        }
+    }))
 };

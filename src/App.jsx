@@ -9,6 +9,7 @@ import { CreateQuick } from './View/CreateQuick';
 import { Model } from './Model';
 import Menu from './View/Menu';
 import customRoutes from './customRoutes';
+import authProvider from './authProvider';
 
 
 class App extends Component {
@@ -34,7 +35,7 @@ class App extends Component {
         }
 
         return (
-            <Admin customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider}>
+            <Admin customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider} authProvider={authProvider}>
                 {
                     model.types && model.types.map(t => {
                         return <Resource options={{ model }} name={t.name} key={t.name}
