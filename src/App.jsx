@@ -1,5 +1,5 @@
 // in App.js
-import React, { Component } from 'react';
+import React, { Component ,createElement} from 'react';
 import buildOpenCrudProvider from 'ra-data-opencrud';
 import { Admin, Resource } from 'react-admin';
 import { ListQuick } from './View/ListQuick';
@@ -10,6 +10,7 @@ import { Model } from './Model';
 import Menu from './View/Menu';
 import customRoutes from './customRoutes';
 import authProvider from './authProvider';
+import Dashboard from './View/Dashboard';
 
 
 class App extends Component {
@@ -22,7 +23,7 @@ class App extends Component {
             .then(dataProvider => this.setState({ dataProvider }));
         fetch("/model-server/model").then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data)
                 this.setState({ model: new Model(data) })
             })
     }
@@ -36,7 +37,7 @@ class App extends Component {
 
         return (
             <Admin customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider} authProvider={authProvider}>
-                {
+                { login =>
                     model.types && model.types.map(t => {
                         return <Resource options={{ model }} name={t.name} key={t.name}
                             list={ListQuick} show={ShowQuick} edit={EditQuick} create={CreateQuick} />

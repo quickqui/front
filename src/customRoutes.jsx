@@ -3,10 +3,15 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import { FunctionList } from './View/FunctionList';
 import { FunctionEdit } from './View/FunctionEdit';
+import Dashboard from './View/Dashboard';
 
 
 export default function (model) {
     return (
+       [ <Route exact path={"/"} key={"/"} render={(props) =>
+            <Dashboard  model={model} {...props} />
+        }
+    /> ] .concat(
         model.functionModel.functions.map((fun) => {
             const base = fun.base
             if (base.crud === 'list')
@@ -23,4 +28,5 @@ export default function (model) {
                 throw new Error("not supported - " + base.crud)
             }
         }))
+    )
 }

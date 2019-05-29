@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT } from 'react-admin';
+import { AUTH_LOGIN, AUTH_CHECK, AUTH_ERROR, AUTH_LOGOUT, AUTH_GET_PERMISSIONS } from 'react-admin';
 import { request } from 'graphql-request'
 
 
@@ -25,6 +25,7 @@ export default (type, params) => {
         }).then(data => {
             localStorage.setItem('login', JSON.stringify(data.login));
         })
+        //TODO 没有测试login失败的情况。
         // const request = new Request('https://mydomain.com/authenticate', {
         //     method: 'POST',
         //     body: JSON.stringify({ username, password }),
@@ -57,6 +58,11 @@ export default (type, params) => {
     }
     if (type === AUTH_CHECK) {
         return localStorage.getItem('login') ? Promise.resolve() : Promise.reject();
+    }
+
+    if (type === AUTH_GET_PERMISSIONS) {
+        const login = localStorage.getItem('login');
+        return login ? Promise.resolve(JSON.parse(login)) : Promise.reject();
     }
     return Promise.reject('Unknown method');
 }
