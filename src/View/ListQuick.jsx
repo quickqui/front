@@ -12,6 +12,8 @@ export const ListQuick = (props) => {
     return <List {...props}>
         <Datagrid>
             {
+                            //TODO field与输入、显示的逻辑抽出来。
+
                 type.fields.map(field => {
                     if (field.flags.includes("relation")) {
                         if (field.typeRef.isList) {

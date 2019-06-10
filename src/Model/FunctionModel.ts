@@ -9,14 +9,15 @@ export interface Function {
     icon: string
     name: string
     base: {
+        function: string
         resource: string
-        crud: string
     }
     filter: object
     sort: object
     prefill: object
 
     links: Link[]
+    action: Action
 }
 
 
@@ -25,4 +26,8 @@ interface Link {
     type: "entity"|"list"
     function: string
     args: object
+}
+
+interface Action{
+    
 }

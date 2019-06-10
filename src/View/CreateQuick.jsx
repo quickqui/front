@@ -16,7 +16,7 @@ export const CreateQuick = props => {
     const type = (model && model.types && model.types.find((ty) => ty.name === resource))
     return <Create {...props}>
         <SimpleForm>{
-
+            //TODO field与输入、显示的逻辑抽出来。
             type.fields.map(field => {
                 if (field.flags.includes("relation")) {
                     if (field.typeRef.isList) {

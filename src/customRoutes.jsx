@@ -14,18 +14,18 @@ export default function (model) {
     /> ] .concat(
         model.functionModel.functions.map((fun) => {
             const base = fun.base
-            if (base.crud === 'list')
+            if (base.function === 'list')
                 return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) =>
                     <FunctionList functionModel={fun} model={model} {...props} />
                 }
                 />)
-            if (base.crud === 'edit')
+            if (base.funciton === 'edit')
                 return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) => 
                     <FunctionEdit functionModel={fun} model={model} {...props} />
                 }
                 />)
             else {
-                throw new Error("not supported - " + base.crud)
+                throw new Error("not supported - " + base.function)
             }
         }))
     )

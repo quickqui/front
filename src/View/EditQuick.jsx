@@ -16,6 +16,8 @@ export const EditQuick = props => {
     return <Edit {...props}>
         <SimpleForm>{
             type.fields.map(field => {
+                            //TODO field与输入、显示的逻辑抽出来。
+
                 if (field.flags.includes("relation")) {
                     if (field.typeRef.isList) {
                         return <ReferenceArrayInput label={field.name} source={field.name + "Ids"} reference={field.typeRef.name} key={field.name}>

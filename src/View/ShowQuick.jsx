@@ -20,6 +20,8 @@ export const ShowQuick = props => {
         <SimpleShowLayout>{
             type.fields.map(field => {
                 if (field.flags.includes("relation")) {
+                                //TODO field与输入、显示的逻辑抽出来。
+
                     if (field.typeRef.isList) {
                         return (<ReferenceArrayField reference={field.typeRef.name} linkType="show" source={field.name + "Ids"} key={field.name}>
                             <SimpleTable field={field} {...props} />
