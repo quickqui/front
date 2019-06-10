@@ -16,12 +16,12 @@ export default function (model) {
             const base = fun.base
             if (base.crud === 'list')
                 return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) =>
-                    <FunctionList functionModel={model.functionModel.functions[0]} model={model} {...props} />
+                    <FunctionList functionModel={fun} model={model} {...props} />
                 }
                 />)
             if (base.crud === 'edit')
                 return (<Route exact path={"/" + fun.name} key={fun.name} render={(props) => 
-                    <FunctionEdit functionModel={model.functionModel.functions[0]} model={model} {...props} />
+                    <FunctionEdit functionModel={fun} model={model} {...props} />
                 }
                 />)
             else {

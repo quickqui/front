@@ -1,7 +1,6 @@
 {
   "name": "quickqui-front",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@types/jest": "^24.0.12",
     "@types/node": "^11.13.8",
@@ -10,6 +9,7 @@
     "graphql": "^14.2.1",
     "graphql-request": "^1.8.2",
     "http-proxy-middleware": "^0.19.1",
+    "jexl": "^2.1.1",
     "prop-types": "^15.7.2",
     "ra-data-json-server": "^2.8.6",
     "ra-data-opencrud": "^0.0.7",

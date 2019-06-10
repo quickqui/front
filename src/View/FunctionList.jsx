@@ -14,9 +14,11 @@ const FunctionButton = ({ record, functionModel }) => {
         <Button
             color='primary'
             component={Link}
+            // TODO 实现 label、type
             to={{
                 pathname: "/" + functionModel.name,
-                state: { id: record.id, prefill: functionModel.prefill },
+                //TODO id不应该特殊化。
+                state: { id: record.id, args: functionModel.args },
             }}
         >
             {functionModel.name}
@@ -26,6 +28,7 @@ const FunctionButton = ({ record, functionModel }) => {
 
 export const FunctionList = (props) => {
     const { model, functionModel } = props
+    console.log(functionModel)
     const resource = functionModel.base.resource
     const location = { pathname: resource }
     const basePath = "/" + resource
@@ -33,10 +36,6 @@ export const FunctionList = (props) => {
     const sort = functionModel.sort && _(functionModel.sort).map((value, key) => {
         return { "field": key, "order": value }
     }).value()[0]
-    // console.log(_(functionModel.sort).map((value, key) => {
-    //     return { "field": key, "order": value }
-    // }))
-    // console.log(sort)
     const type = (model && model.types && model.types.find((ty) => ty.name === resource))
 
 
@@ -68,11 +67,12 @@ export const FunctionList = (props) => {
                 })
             }
             {
-                functionModel.actions && functionModel.actions.map((action) => {
-                    const actionFun = model.functions.find((fun) => fun.name === action)
+                functionModel.links && functionModel.links.map((link) => {
+                    // TODO 实现 label、type
+                    const actionFun = model.functions.find((fun) => fun.name === link.function)
                     if (actionFun) {
                         return <FunctionButton key={actionFun.name} functionModel={actionFun} />
-                    }else{
+                    } else {
                         return undefined
                     }
                 })

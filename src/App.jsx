@@ -6,7 +6,7 @@ import { ListQuick } from './View/ListQuick';
 import { ShowQuick } from './View/ShowQuick'
 import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
-import { Model } from './Model';
+import { Model } from './Model/Model';
 import Menu from './View/Menu';
 import customRoutes from './customRoutes';
 import authProvider from './authProvider';

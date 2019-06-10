@@ -14,11 +14,15 @@ export interface Function {
     }
     filter: object
     sort: object
-    actions: Action[]
     prefill: object
+
+    links: Link[]
 }
 
 
-interface Action {
-    name: string
+interface Link {
+    label: string
+    type: "entity"|"list"
+    function: string
+    args: object
 }

@@ -26,6 +26,7 @@ const Menu = (props) => {
 
             {
                 //TODO 实现menuPath暨子菜单
+                //TODO 实现Badge。作为list的一部分。
                 model.functions.filter((fun) => fun.base.crud === 'list').map((fun) => {
                     return <MenuItemLink key={fun.name}
                         to={"/" + fun.name}

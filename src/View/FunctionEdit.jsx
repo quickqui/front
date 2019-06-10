@@ -15,9 +15,20 @@ export const FunctionEdit = props => {
     const resource = functionModel.base.resource
     const basePath = "/" + resource
     const type = (model && model.types && model.types.find((ty) => ty.name === resource))
-
+    function copyArgsToPrefill(){
+        //TODO context设计可能需要进一步，args貌似是最高优先级的。
+        //model里面配置的args和运行时（上一页）传过来的是不是都叫args？
+        //可能配置的应该是params，运行时传过来的应该是args。
+        const context = props.location.state.args
+        const prefills = functionModel.prefill
+        //TODO 表达式支持。
+        //包裹在${}中的，再进行表达式计算
+        const re ={...prefills}
+        console.log(re)
+        return re
+    }
     return <Edit basePath={basePath} resource={resource} id={props.location.state.id} {...props}>
-        <FormPrefill prefill={props.location.state.prefill} >
+        <FormPrefill prefill={copyArgsToPrefill()} >
             <SimpleForm>{
                 type.fields.map(field => {
                     if (field.flags.includes("relation")) {
