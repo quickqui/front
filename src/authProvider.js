@@ -8,6 +8,8 @@ import { request } from 'graphql-request'
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
         const { username, password } = params;
+        //TODO 应该用username登陆，比较符合中国习惯。
+        //TODO 实现手机号、微信等登入。
         const query = /* GraphQL */ `
     mutation login($username: String!, $password: String!){
         login(email:$username,password:$password){
@@ -41,6 +43,7 @@ export default (type, params) => {
         //     .then(({ token }) => {
         //         localStorage.setItem('token', token);
         //     });
+        //TODO 这里貌似有bug，Promise.resolve是不是在没有then的情况下就返回了？
         return Promise.resolve();
 
     }
