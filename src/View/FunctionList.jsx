@@ -1,9 +1,11 @@
 import React from 'react';
-import { List, Datagrid, ReferenceField, ShowButton, EditButton, FunctionField } from 'react-admin';
-import { scalarField } from '../Component/ScalarField';
+import { List, Datagrid } from 'react-admin';
+import {listingFields} from './ListingFields'
+
 import * as _ from 'lodash';
 
-
+import * as R from "ramda";
+import * as oc from 'ts-optchain'
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
@@ -36,8 +38,8 @@ export const FunctionList = (props) => {
     const sort = functionModel.sort && _(functionModel.sort).map((value, key) => {
         return { "field": key, "order": value }
     }).value()[0]
-    const type = (model && model.types && model.types.find((ty) => ty.name === resource))
 
+    const entity = model.entities.find(R.propEq('name', resource))
 
 
 
@@ -49,24 +51,7 @@ export const FunctionList = (props) => {
         {...props}>
         <Datagrid>
             {
-                            //TODO field与输入、显示的逻辑抽出来。
-
-                type.fields.map(field => {
-                    if (field.flags.includes("relation")) {
-                        if (field.typeRef.isList) {
-                            //NOTE list里面一对多不要全部展示出来，展示一个count。真正的关联在Show或者Edit去做。
-                            return <FunctionField key={field.name} label={field.name + " - Count"} render={record => (record[field.name] && record[field.name].length) || 0} />
-                        } else {
-                            return <ReferenceField key={field.name} label={field.name} source={field.name + ".id"} reference={field.typeRef.name} linkType="show">
-                                {scalarField({ field, key: field.name, source: model.getBriefFieldName(field.typeRef) })}
-                            </ReferenceField>
-                        }
-                    }
-                    if (field.typeRef.isList) {
-                        return <FunctionField key={field.name} label={field.name + " - Count"} render={record => (record[field.name] && record[field.name].length) || 0} />
-                    }
-                    return scalarField({ field, source: field.name, key: field.name })
-                })
+                    listingFields(entity,model)
             }
             {
                 functionModel.links && functionModel.links.map((link) => {

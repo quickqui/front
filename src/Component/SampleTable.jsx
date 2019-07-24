@@ -1,15 +1,17 @@
 import React from 'react'; // we need this to make JSX compile
 import { Datagrid, ShowButton } from 'react-admin';
-import { scalarField } from './ScalarField';
+import * as R from "ramda";
+import * as oc from 'ts-optchain'
+import { listingFields } from '../View/ListingFields';
+
 export const SimpleTable = props => {
-    const { options, field } = props;
+    const { options, property } = props;
     const { model } = options;
-    const relationType = model && model.types && model.types.find(ty => ty.name === field.typeRef.name);
+    // const relationType = model && model.types && model.types.find(ty => ty.name === field.typeRef.name);
+    const relationPro = oc(model.entites)([]).find(R.propEq('name', property.relation.to))
     return (
         <Datagrid {...props}>
-            {relationType.fields.map(f =>
-                scalarField({ field: f, source: f.name, key: f.name, ...props })
-            )}
+            {listingFields(relationPro,model)}
             <ShowButton />
         </Datagrid>
     );

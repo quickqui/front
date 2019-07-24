@@ -8,12 +8,12 @@ export const scalarField = (prop) => {
     //     console.log(prop)
     //     return scalarField({record:{'__self':prop.record},...prop})
     // }
-    const { field } = prop
+    const { property } = prop
     // const{dataModel} = options
-    if (field.typeRef.name === "Boolean") {
+    if (property.type === "Boolean") {
         return <BooleanField {...prop} />
     }
-    if (field.typeRef.name === "DateTime") {
+    if (property.type === "DateTime") {
         return <DateField {...prop} />
     }
     return <TextField {...prop} />

@@ -3,12 +3,12 @@ import { BooleanInput, TextInput ,DateInput} from 'react-admin';
 
 
 export const scalarInput = (prop) => {
-    const { field } = prop
+    const { property } = prop
     // const{dataModel} = options
-    if (field.typeRef.name === "Boolean") {
+    if (property.name === "Boolean") {
         return <BooleanInput {...prop} />
     }
-    if (field.typeRef.name === "DateTime") {
+    if (property.name === "DateTime") {
         //FIXME DateTimeInput 有bug。‘can nof read property find of null...' 之类的。
         //可能是跟datasource 配合的bug，否则不会别处没有看到。
         //TODO 详细研究datasource。

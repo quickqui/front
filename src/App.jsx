@@ -1,5 +1,5 @@
 // in App.js
-import React, { Component ,createElement} from 'react';
+import React, { Component} from 'react';
 import buildOpenCrudProvider from 'ra-data-opencrud';
 import { Admin, Resource } from 'react-admin';
 import { ListQuick } from './View/ListQuick';
@@ -10,21 +10,19 @@ import { Model } from './Model/Model';
 import Menu from './View/Menu';
 import customRoutes from './customRoutes';
 import authProvider from './authProvider';
-import Dashboard from './View/Dashboard';
 
 
 class App extends Component {
     constructor() {
         super()
-        this.state = { dataProvider: null, dataModel: null };
+        this.state = { dataProvider: null, model: null };
     }
     componentDidMount() {
         buildOpenCrudProvider({ clientOptions: { uri: '/prisma' } })
-            .then(dataProvider => this.setState({ dataProvider }));
+            .then(dataProvider => this.setState({...this.state, dataProvider }));
         fetch("/model-server/model").then(res => res.json())
             .then(data => {
-                // console.log(data)
-                this.setState({ model: new Model(data) })
+                this.setState( { ...this.state, model: new Model(data) })
             })
     }
 
@@ -34,12 +32,14 @@ class App extends Component {
         if (!dataProvider || !model) {
             return <div>Loading</div>;
         }
-
         return (
-            <Admin customRoutes={customRoutes(model)} menu={Menu} dataProvider={dataProvider} authProvider={authProvider}>
-                { login =>
-                    model.types && model.types.map(t => {
-                        return <Resource options={{ model }} name={t.name} key={t.name}
+            <Admin customRoutes={customRoutes(model)} menu={Menu} 
+            dataProvider={dataProvider} 
+            // authProvider={authProvider}
+            >
+                { 
+                    model.entities && model.entities.map((p) => {
+                        return <Resource options={{ model }} name={p.name} key={p.name}
                             list={ListQuick} show={ShowQuick} edit={EditQuick} create={CreateQuick} />
                     })
                 }
