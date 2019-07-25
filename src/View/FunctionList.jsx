@@ -5,7 +5,7 @@ import {listingFields} from './ListingFields'
 import * as _ from 'lodash';
 
 import * as R from "ramda";
-import * as oc from 'ts-optchain'
+import {oc}  from 'ts-optchain'
 
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';

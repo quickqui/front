@@ -10,7 +10,7 @@ import { scalarInput } from '../Component/ScalarInput'
 import { StringComponent } from '../Component/StringComponet'
 
 export function editingFields(entity, model) {
-    return entity.properties.map(property => {
+    return entity.properties.filter((property)=>!(["id","createdAt","updatedAt"].includes(property.name))).map(property => {
         if (model.isTypeRelation(property)) {
             if (model.isTypeList(property)) {
                 return <ReferenceArrayInput label={property.name} source={property.name + "Ids"} reference={property.relation.to} key={property.name}>
@@ -41,7 +41,7 @@ export function editingFields(entity, model) {
                 </ArrayField>
             }
         }
-        if (model.isTypeId(property)) {
+        if (model.isPropertyId(property)) {
             return DisabledInput({ property, source: property.name, key: property.name })
         }
 

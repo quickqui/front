@@ -6,13 +6,13 @@ import { FormPrefill } from '../Component/FormPrefill'
 
 import {editingFields} from './EditingFields'
 import * as R from "ramda";
-import * as oc from 'ts-optchain'
+import {oc}  from 'ts-optchain'
 
 export const FunctionEdit = props => {
     const { functionModel, model } = props
     const resource = functionModel.base.resource
     const basePath = "/" + resource
-    const entity = oc(model.entites)([]).find(R.propEq('name', resource))
+    const entity = oc(model.entities)([]).find(R.propEq('name', resource))
     function copyArgsToPrefill(){
         const prefills = functionModel.prefill
         //TODO 表达式支持。
@@ -22,7 +22,7 @@ export const FunctionEdit = props => {
         return re
     }
     return <Edit basePath={basePath} resource={resource} id={props.location.state.id} {...props}>
-        <FormPrefill prefill={copyArgsToPrefill()} >
+        <FormPrefill prefill={{...copyArgsToPrefill(), createdAt: undefined, updatedAt: undefined }} >
             <SimpleForm>{
                 editingFields(entity,model)
             }

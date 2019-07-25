@@ -12,7 +12,7 @@ export function showingFields(entity, model) {
         if (model.isTypeRelation(property)) {
             if (model.isTypeList(property)) {
                 return <ReferenceArrayField label={property.name} source={property.name + "Ids"} reference={property.relation.to} key={property.name}>
-                    <SimpleTable porperty={property} />
+                    <SimpleTable property={property} model={model} />
                 </ReferenceArrayField>
             } else {
                 return <ReferenceField label={property.name} source={property.name + ".id"} reference={property.relation.to} key={property.name}>
