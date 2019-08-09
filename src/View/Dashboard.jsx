@@ -2,12 +2,13 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Title } from 'react-admin';
-import { Grid, Button,  } from '@material-ui/core';
+import { Grid, Button, } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import { Link } from 'react-router-dom';
+import {IconCardView} from './IconCardView'
 
 
-const FunctionButton = ({functionModel }) => {
+const FunctionButton = ({ functionModel }) => {
     return (
         <Button
             color='primary'
@@ -36,7 +37,7 @@ export default (props) => {
                             return (
                                 <Grid key={fun.name} item xs>
                                     <Card>
-                                        <CardContent><FunctionButton functionModel={fun}/>
+                                        <CardContent><FunctionButton functionModel={fun} />
                                             {/* TODO 更多dashboard内容，todo，message，图表... */}
                                         </CardContent>
                                     </Card>
@@ -45,6 +46,8 @@ export default (props) => {
                     } </Grid>
 
             </CardContent>
+            <IconCardView text="User count" {...props} resource="User"/>
+
         </Card>)
 
 };
