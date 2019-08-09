@@ -26,9 +26,7 @@ export default function (model) {
                     }
                     />)
                 }
-                else {
-                    throw new Error("not supported - " + base.function)
-                }
-            }))
+               return []
+            })).flat()
     )
 }

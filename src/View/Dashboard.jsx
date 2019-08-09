@@ -5,7 +5,7 @@ import { Title } from 'react-admin';
 import { Grid, Button, } from '@material-ui/core';
 import Icon from '@material-ui/core/Icon';
 import { Link } from 'react-router-dom';
-import {IconCardView} from './IconCardView'
+import { IconCardView } from './IconCardView'
 
 
 const FunctionButton = ({ functionModel }) => {
@@ -46,8 +46,13 @@ export default (props) => {
                     } </Grid>
 
             </CardContent>
-            <IconCardView text="User count" {...props} resource="User"/>
-
+            {
+                funs.filter((fun) => fun.base && fun.base.function === "iconCard").map((fun) => {
+                    return (
+                        <IconCardView  key={fun.name} text={fun.name} {...props} resource={fun.base.resource} filter={fun.filter} icon={fun.icon}/>
+                    )
+                })
+            }
         </Card>)
 
 };

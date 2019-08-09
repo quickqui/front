@@ -1,10 +1,10 @@
 import React from 'react';
 import compose from 'recompose/compose';
 import Card from '@material-ui/core/Card';
-import DollarIcon from '@material-ui/icons/AttachMoney';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { translate } from 'react-admin';
+import * as icons  from '@material-ui/icons'
 
 import CardIcon from './CardIcon';
 
@@ -23,10 +23,10 @@ const styles = {
 };
 
 const IconCard = (props) => {
-    const { value, resource, source, translate, classes, text } = props
+    const { value, classes, text,icon } = props
     return (
     <div className={classes.main}>
-        <CardIcon Icon={DollarIcon} bgColor="#31708f" />
+        <CardIcon Icon={icons[icon || 'Label']} bgColor="#31708f" />
         <Card className={classes.card}>
             <Typography className={classes.title} color="textSecondary">
                 {text}

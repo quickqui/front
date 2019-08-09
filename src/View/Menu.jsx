@@ -1,11 +1,12 @@
-import React from 'react';
-import { createElement } from 'react'
-
-import { connect } from 'react-redux';
-import { MenuItemLink, getResources, Responsive } from 'react-admin';
-import { withRouter } from 'react-router-dom';
+import * as icons from '@material-ui/icons';
+import HomeIcon from '@material-ui/icons/Home';
 import LabelIcon from '@material-ui/icons/Label';
-import HomeIcon from '@material-ui/icons/Home'
+import React, { createElement } from 'react';
+import { getResources, MenuItemLink, Responsive } from 'react-admin';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+
 
 
 const Menu = (props) => {
@@ -31,6 +32,7 @@ const Menu = (props) => {
                     return <MenuItemLink key={fun.name}
                         to={"/" + fun.name}
                         primaryText={fun.name}
+                        // leftIcon={ icons[fun.icon || 'Label'] || <LabelIcon />}
                         leftIcon={<LabelIcon />}
                         onClick={onMenuClick} />
                 })
