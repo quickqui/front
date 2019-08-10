@@ -5,11 +5,11 @@ interface Node extends WithPath<string> { obj: string }
 
 it('tree', () => {
   const pathes: WithPath<string>[] = [
-    { path: '/1/12', obj: '12' },
-    { path: '/1/11', obj: '11' },
-    { path: '/1/12/123', obj: '123' },
-    { path: '/1/12/123/1234', obj: '1234' },
-    { path: ['1', '13'], obj: '13' }
+    { path: '/1/12', object: '12' },
+    { path: '/1/11', object: '11' },
+    { path: '/1/12/123', object: '123' },
+    { path: '/1/12/123/1234', object: '1234' },
+    { path: ['1', '13'], object: '13' }
   ];
   const tree: TreeNode<string>[] = filesToTreeNodes(pathes)
   expect(tree.length).toBe(1)
