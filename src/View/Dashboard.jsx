@@ -29,7 +29,7 @@ export default (props) => {
     return (
         <Card>
             <Title title="Welcome to QuickQui" />
-            <CardContent>
+            {/* <CardContent>
                 <Grid container spacing={32}>
                     {
 
@@ -39,13 +39,13 @@ export default (props) => {
                                     <Card>
                                         <CardContent><FunctionButton functionModel={fun} />
                                             {/* TODO 更多dashboard内容，todo，message，图表... */}
-                                        </CardContent>
+                                        {/* </CardContent>
                                     </Card>
-                                </Grid>)
-                        })
-                    } </Grid>
+                                </Grid>) */}
+                        {/* })
+                    } </Grid> */}
 
-            </CardContent>
+            {/* </CardContent> */} 
             {
                 funs.filter((fun) => fun.base && fun.base.function === "iconCard").map((fun) => {
                     return (
