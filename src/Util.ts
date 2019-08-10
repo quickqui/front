@@ -1,15 +1,16 @@
-import R from "ramda";
+import * as R from "ramda";
 
 export interface TreeNode<T> {
     isDirectory: boolean
     children: TreeNode<T>[]
     name: string
     path: string | string[]
+    pathString: string
     object: T
 }
 export interface WithPath<T> {
     path: string | string[]
-    obj: T
+    object: T
 }
 
 
@@ -20,12 +21,13 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
             (obj.path as string).replace(/^\/|\/$/g, "").split('/') : (obj.path as string[])
         var ptr: any = tree;
         for (let i = 0; i < splitpath.length; i++) {
-            let node : TreeNode<T>= {
+            let node: TreeNode<T> = {
                 name: splitpath[i],
-                children :[],
+                children: [],
                 isDirectory: true,
                 path: obj.path,
-                object: obj.obj
+                object: obj.object,
+                pathString: R.type(obj.path) === "String" ? (obj.path as string) : (obj.path as string[]).join('/')
             };
             if (i == splitpath.length - 1) {
                 node.isDirectory = false
@@ -37,7 +39,7 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
     }
     function objectToArr(node: any) {
         Object.keys(node || {}).map((k) => {
-            if (node[k].children) {
+            if (node[k] && node[k].children) {
                 objectToArr(node[k])
             }
         })

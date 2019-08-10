@@ -10,7 +10,7 @@ import * as icons  from '@material-ui/icons'
 
 
 
-const Menu = (props) => {
+const Menu2 = (props) => {
     const { resources, onMenuClick, logout } = props
     const model = resources[0].options.model
 

@@ -2,6 +2,9 @@
 
 Front项目在QuickQui项目群中负责前端展现。总体设计主要看QuickQui项目的文档 - https://github.com/quickqui/main
 
+## Icon参考
+
+https://material.io/resources/icons
 
 ## CRUD
 根据模型自动生成基本的CRUD。
