@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component ,createElement} from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import LabelIcon from '@material-ui/icons/Label';
+import MoreHoriz from '@material-ui/icons/MoreHoriz';
+
+import * as icons  from '@material-ui/icons'
+
 import { withRouter } from 'react-router-dom';
 import {
     translate,
@@ -50,8 +53,8 @@ class Menu extends Component {
                 handleToggle={() => this.handleToggle(treeNode.pathString)}
                 isOpen={this.state[treeNode.pathString]}
                 sidebarIsOpen={open}
-                name={treeNode.pathString}
-                icon={<LabelIcon />}
+                name={treeNode.name}
+                icon={<MoreHoriz />}
             >
                 {
                     treeNode.children.map(this.toElement,open,onMenuClick)
@@ -60,9 +63,9 @@ class Menu extends Component {
 
         } else {
             return <MenuItemLink
-                to={treeNode.pathString}
+                to={"/"+treeNode.object.name}
                 primaryText={treeNode.object.name}
-                leftIcon={<LabelIcon/>}
+                leftIcon={createElement( icons[treeNode.object.icon || 'Label'])}
                 onClick={onMenuClick}
             />
         }
