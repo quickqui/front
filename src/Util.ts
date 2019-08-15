@@ -13,7 +13,7 @@ export interface WithPath<T> {
     object: T
 }
 
-
+//TODO directory节点的path和pathstring有问题。
 export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
     var tree = {}
     function addnode(obj: WithPath<T>) {

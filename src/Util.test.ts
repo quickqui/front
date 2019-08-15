@@ -14,7 +14,10 @@ it('tree', () => {
   const tree: TreeNode<string>[] = filesToTreeNodes(pathes)
   expect(tree.length).toBe(1)
   expect(tree[0].isDirectory).toBeTruthy()
+
   expect(tree[0].children).toHaveLength(3)
+  expect(tree[0].name).toBe('1')
+  expect(tree[0].path).toBe('/1')
   expect(tree[0].object).toBe('12')
   console.log(JSON.stringify(tree, undefined, 2))
 });
