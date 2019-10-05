@@ -1,6 +1,5 @@
 // in App.js
 import React, { Component} from 'react';
-import buildOpenCrudProvider from 'ra-data-opencrud';
 import { Admin, Resource } from 'react-admin';
 import { ListQuick } from './View/ListQuick';
 import { ShowQuick } from './View/ShowQuick'
@@ -12,16 +11,11 @@ import Menu from './View/Menu';
 import customRoutes from './customRoutes';
 import authProvider from './authProvider';
 
-import axios from 'axios';
+import {model} from './Model/Model'
+
+import {dataProvider} from './data/dataProvider'
 
 
-
-
-const dataProvider = (type, resource, params) => {
-    const json = {type,resource,params}
-    return axios.post('/app/dataProvider',json).then(r=> r.data)
-    
-}
 
 class App extends Component {
     constructor() {
@@ -31,7 +25,7 @@ class App extends Component {
     componentDidMount() {
         Promise.resolve(dataProvider)
             .then(dataProvider => this.setState({...this.state, dataProvider }));
-        fetch("/model-server/model").then(res => res.json())
+        model.then(res => res.json())
             .then(data => {
                 this.setState( { ...this.state, model: new Model(data) })
             })

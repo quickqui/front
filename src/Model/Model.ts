@@ -3,6 +3,10 @@ import { DomainModel, Entity, List, Property } from './DomainModel'
 import * as R from "ramda";
 import * as _ from 'lodash'
 
+import { env } from '../Env'
+import axios from 'axios'
+
+export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
 
 export class Model {
 

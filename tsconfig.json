@@ -20,6 +20,6 @@
     "moduleResolution": "node"
   },
   "include": [
-    "src"
+    "../../../huadahengxinProjects/fake_device/use-quickqui/src","src","/extendDir"
   ]
 }
