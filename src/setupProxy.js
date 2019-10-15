@@ -3,7 +3,7 @@ const proxy = require('http-proxy-middleware');
 
 
 const env = process.env.ENV
-
+//TODO 改成跨域的模式。
 module.exports = function (app) {
     console.log(env)
     if (env == 'dev_docker') {

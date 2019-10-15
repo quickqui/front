@@ -7,7 +7,7 @@ export interface DomainModel {
 export interface Entity  {
     name: string
     properties: Property[]
-    //TODO 随时考虑这个东西在这里的合理性。目前的用途是biref字段，严格来讲这个东西不应该是entity的属性。
+    //TODO 随时考虑这个东西在这里的合理性。目前的用途是brief字段，严格来讲这个东西不应该是entity的属性。
     directives?: object
 }
 

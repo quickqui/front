@@ -5,8 +5,9 @@ import * as _ from 'lodash'
 
 import { env } from '../Env'
 import axios from 'axios'
-
-export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
+//TODO 改成跨域的模式
+// export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
+export const model: Promise<object> = axios.get('/model-server/model').then(_ => _.data)
 
 export class Model {
 

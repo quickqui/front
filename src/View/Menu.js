@@ -41,9 +41,9 @@ class Menu extends Component {
             }
             else return undefined
         }))
-        console.log(withPath)
+        // console.log(withPath)
         const tree = filesToTreeNodes(withPath)
-        console.log(tree)
+        // console.log(tree)
         return tree
     }
 
@@ -55,6 +55,7 @@ class Menu extends Component {
                 sidebarIsOpen={open}
                 name={treeNode.name}
                 icon={<MoreHoriz />}
+                key = {treeNode.path}
             >
                 {
                     treeNode.children.map(this.toElement,open,onMenuClick)
@@ -67,13 +68,14 @@ class Menu extends Component {
                 primaryText={treeNode.object.name}
                 leftIcon={createElement( icons[treeNode.object.icon || 'Label'])}
                 onClick={onMenuClick}
+                key = {treeNode.path}
             />
         }
     }
 
     render() {
         const { onMenuClick, resources,open } = this.props;
-        console.log(this.props)
+        // console.log(this.props)
         if(!resources){
             return <div></div>
         }
