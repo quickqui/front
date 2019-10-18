@@ -13,6 +13,8 @@ export const FunctionEdit = props => {
     const resource = functionModel.base.resource
     const basePath = "/" + resource
     const entity = oc(model.entities)([]).find(R.propEq('name', resource))
+    const redirectFunction = functionModel.redirect ? model.functionModel.functions.find(f => f.name === functionModel.redirect) : undefined
+
     function copyArgsToPrefill(){
         const prefills = functionModel.prefill
         //TODO 表达式支持。
@@ -23,7 +25,7 @@ export const FunctionEdit = props => {
     }
     return <Edit basePath={basePath} resource={resource} id={props.location.state.id} {...props}>
         <FormPrefill prefill={{...copyArgsToPrefill(), createdAt: undefined, updatedAt: undefined }} >
-            <SimpleForm>{
+            <SimpleForm redirect={redirectFunction ? "/" + redirectFunction.name : 'list'}>{
                 editingFields(entity,model)
             }
             </SimpleForm>

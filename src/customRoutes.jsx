@@ -33,8 +33,8 @@ export default function (model) {
                     }
                     />)                
                 }
+                if(base.function === 'iconCard') return []
                 throw new Error(`not supported function - ${base.function}`)
-               return []
             })).flat()
     )
 }
