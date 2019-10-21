@@ -7,7 +7,6 @@ import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
 import { Model } from './Model/Model';
 import Menu from './View/Menu';
-import MyLayout from './View/MyLayout';
 import { onInit } from './life/frontLife'
 
 
@@ -44,7 +43,7 @@ class App extends Component {
             return <div>Loading</div>;
         }
         return (
-            <Admin appLayout={MyLayout}
+            <Admin 
                 customRoutes={customRoutes(model)} menu={Menu}
                 dataProvider={dataProvider[0]}
                 customSagas={dataProvider[1]}

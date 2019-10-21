@@ -49,8 +49,10 @@ const SubMenu = ({
             <ListItemIcon>{isOpen ? <ExpandMore /> : icon}</ListItemIcon>
             <ListItemText
                 inset
-                primary={isOpen ? translate(name) : ''}
-                secondary={isOpen ? '' : translate(name)}
+                // primary={isOpen ? translate(name) : ''}
+                // secondary={isOpen ? '' : translate(name)}
+                primary={isOpen ? (name) : ''}
+                secondary={isOpen ? '' : (name)}
                 className={classes.listItemText}
             />
         </ListItem>

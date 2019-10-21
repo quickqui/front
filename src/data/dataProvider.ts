@@ -21,20 +21,14 @@ const frontEndDataProvider: Promise<DataProvider | undefined> = (async () => {
         m.dataSources.filter((dataSource: any) => (dataSource.end === 'front'))
         : undefined
     if (dataSourcesDefinitions) {
-        console.dir(dataSourcesDefinitions)
         const realtimeDatasourceDefs = dataSourcesDefinitions.filter((datasource: any) => !!datasource.realtime)
         realtimeSagas = realtimeDatasourceDefs.map((def: any) => createRealtimeSaga(def.resource, def.realtime))
-        console.log(realtimeSagas)
         const dataProviders: Promise<DataProvider>[] = dataSourcesDefinitions.map(async (dataSourceD: any) => {
             const dataProvider = await resolve<DataProvider>(dataSourceD.dataProvider)
             return forResource(dataSourceD.resource, dataProvider)
         })
-        // return dataProviders.reduce((a,b)=>a.then(d=>b.then(d2=>chain(d,d2))),Promise.resolve(undefined))
         return Promise.all(dataProviders).then(dataPS => dataPS.reduce(chain))
     }
-
-  
-
     return undefined
 })()
 
@@ -43,5 +37,5 @@ const frontEndDataProvider: Promise<DataProvider | undefined> = (async () => {
 export const dataProvider: Promise<[DataProvider, any[]]> =
     frontEndDataProvider.then(_ => {
         const provider = _ ? chain(_, backEndDataProvider) : backEndDataProvider
-        return [provider, realtimeSagas.map(s=>s(provider))]
+        return [provider, realtimeSagas.map(s => s(provider))]
     })

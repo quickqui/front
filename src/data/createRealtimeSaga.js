@@ -1,8 +1,8 @@
 import realtimeSaga from 'ra-realtime';
 
-const observeRequest = (realtimeResources,interval)=>dataProvider => (type, resource, params) => {
+const observeRequest = (realtimeResources, interval) => dataProvider => (type, resource, params) => {
     // Filtering so that only posts are updated in real time
-    if (!realtimeResources|| !(realtimeResources.includes(resource))) return null;
+    if (!realtimeResources || !(realtimeResources.includes(resource))) return null;
 
     // Use your apollo client methods here or sockets or whatever else including the following very naive polling mechanism
     return {
@@ -16,15 +16,17 @@ const observeRequest = (realtimeResources,interval)=>dataProvider => (type, reso
             const subscription = {
                 unsubscribe() {
                     // Clean up after ourselves
-                    clearInterval(intervalId);
-                    // Notify the saga that we cleaned up everything
-                    observer.complete();
+                    if (intervalId) {
+                        clearInterval(intervalId);
+                        intervalId = undefined;
+                        // Notify the saga that we cleaned up everything
+                        observer.complete();
+                    }
                 }
             };
-
             return subscription;
         },
     };
 };
 
-export default (resources,interval)=>dataProvider => realtimeSaga(observeRequest(resources,interval)(dataProvider));
+export default (resources, interval) => dataProvider => realtimeSaga(observeRequest(resources, interval)(dataProvider));
