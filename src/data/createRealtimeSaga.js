@@ -7,7 +7,7 @@ const observeRequest = (realtimeResources, interval) => dataProvider => (type, r
     // Use your apollo client methods here or sockets or whatever else including the following very naive polling mechanism
     return {
         subscribe(observer) {
-            const intervalId = setInterval(() => {
+            let intervalId = setInterval(() => {
                 dataProvider(type, resource, params)
                     .then(results => observer.next(results)) // New data received, notify the observer
                     .catch(error => observer.error(error)); // Ouch, an error occurred, notify the observer

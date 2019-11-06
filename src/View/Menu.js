@@ -1,4 +1,4 @@
-import React, { Component ,createElement} from 'react';
+import React, { PureComponent ,createElement} from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import MoreHoriz from '@material-ui/icons/MoreHoriz';
@@ -18,7 +18,7 @@ import SubMenu from '../Component/SubMenu';
 import {filesToTreeNodes} from '../Util'
 import * as _ from 'lodash';
 
-class Menu extends Component {
+class Menu extends PureComponent {
 
 
     state = {
@@ -75,7 +75,6 @@ class Menu extends Component {
 
     render() {
         const { onMenuClick, resources,open } = this.props;
-        // console.log(this.props)
         if(!resources){
             return <div></div>
         }
