@@ -5,7 +5,7 @@ import { ListQuick } from './View/ListQuick';
 import { ShowQuick } from './View/ShowQuick'
 import { EditQuick } from './View/EditQuick'
 import { CreateQuick } from './View/CreateQuick';
-import { Model } from './Model/Model';
+import { ModelWithDomainAndFunction } from "./Model/Model";
 import Menu from './View/Menu';
 import { onInit } from './life/frontLife'
 
@@ -30,7 +30,10 @@ class App extends Component {
                 .then(dataProvider => this.setState({ ...this.state, dataProvider: dataProvider }));
             model
                 .then(data => {
-                    this.setState({ ...this.state, model: new Model(data) })
+                    this.setState({
+                      ...this.state,
+                      model: new ModelWithDomainAndFunction(data)
+                    });
                 })
         })
 

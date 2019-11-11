@@ -1,92 +1,108 @@
-import { FunctionModel, Function } from "./FunctionModel";
-import { DomainModel, Entity, List, Property } from './DomainModel'
-import * as R from "ramda";
-import * as _ from 'lodash'
 
-import { env } from '../Env'
-import axios from 'axios'
+import * as R from "ramda";
+import * as _ from "lodash";
+
+import axios from "axios";
+//TODO 怎么去掉‘dist’
+import { DomainModel, Entity, List, Property } from '@quick-qui/model-defines/dist/domain/';
+import { FunctionModel ,Function} from '@quick-qui/model-defines/dist/function';
+
+
 //TODO 改成跨域的模式
 // export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
-export const model: Promise<object> = axios.get('/model-server/model').then(_ => _.data)
+//TODO 考虑，是否需要本地模式，那种非常简单的model，或者可以从model server预处理的。
+export const model: Promise<object> = axios
+  .get("/model-server/model")
+  .then(_ => _.data);
 
-export class Model {
+export class ModelWithDomainAndFunction {
+  readonly domainModel: DomainModel;
+  readonly functionModel: FunctionModel;
 
-    readonly domainModel: DomainModel
-    readonly functionModel: FunctionModel
+  constructor(model: {
+    domainModel: DomainModel;
+    functionModel: FunctionModel;
+  }) {
+    this.domainModel = model.domainModel;
+    this.functionModel = model.functionModel;
+  }
 
+  get entities(): Entity[] {
+    return this.domainModel.entities || [];
+  }
 
-    constructor(model: { domainModel: DomainModel, functionModel: FunctionModel }) {
-        console.log(model)
-        console.log(model.domainModel)
-        this.domainModel = model.domainModel
-        console.log(this.domainModel)
-        this.functionModel = model.functionModel
+  get functions(): Function[] {
+    return this.functionModel.functions || [];
+  }
+
+  // findField(flag: string): [Type, Field] | undefined {
+  //     const zipTypeWithField: [Type, Field][] = this.dataModel.types.flatMap(t => t.fields.map(f => [t, f]))
+  //     if (!zipTypeWithField) return undefined
+  //     return zipTypeWithField.find(([t, f]) => (f as FieldP).flags.includes(flag))
+  // }
+
+  // getBriefFieldName(typeRef: TypeRef): string | undefined {
+  //     const reType = this.dataModel.types.find(t => t.name === typeRef.name)
+  //     if (reType) {
+  //         const field = reType.fields.find(f => (f as FieldP).flags.includes("brief"))
+  //         return field ? field.name : undefined
+  //     }
+  //     return undefined
+  // }
+
+  isList(object: any): object is List {
+    if (_.isNil(object)) return false;
+    if (_.isString(object)) return false;
+    return "itemType" in object;
+  }
+
+  isTypeList(property: Property): boolean {
+    if (this.isTypeRelation(property)) {
+      if (property.relation) return property.relation.n != "one";
+      else return false;
     }
-
-    get entities(): Entity[] {
-        return this.domainModel.entities || []
+    return this.isList(property.type);
+  }
+  isTypeRelation(property: Property): boolean {
+    return R.complement(R.isNil)(property.relation);
+  }
+  isPropertyId(property: Property): boolean {
+    if (this.isList(property.type)) return false;
+    return property.type === "id";
+  }
+  getTypeEntity(property: Property): Entity | undefined {
+    if (this.isTypeRelation(property)) {
+      return this.entities.find(
+        R.propEq("name", property.relation && property.relation.to)
+      );
     }
-
-    get functions(): Function[] {
-        return this.functionModel.functions || []
+    if (this.isTypeList(property)) {
+      return this.entities.find(
+        R.propEq("name", (property.type as List).itemType)
+      );
+    } else {
+      return this.entities.find(R.propEq("name", property.type));
     }
+  }
+  getBriefPropertyName(entity: Entity): string | undefined {
+    return (
+      (entity.directives && ((entity.directives as any)["brief"] as string)) ||
+      "id"
+    );
+  }
 
+  isTypeScalar(property: Property): boolean {
+    const scalarTypes = [
+      "String",
+      "",
+      "Int",
+      "Float",
+      "Boolean",
+      "DateTime",
+      "ID"
+    ];
 
-    // findField(flag: string): [Type, Field] | undefined {
-    //     const zipTypeWithField: [Type, Field][] = this.dataModel.types.flatMap(t => t.fields.map(f => [t, f]))
-    //     if (!zipTypeWithField) return undefined
-    //     return zipTypeWithField.find(([t, f]) => (f as FieldP).flags.includes(flag))
-    // }
-
-    // getBriefFieldName(typeRef: TypeRef): string | undefined {
-    //     const reType = this.dataModel.types.find(t => t.name === typeRef.name)
-    //     if (reType) {
-    //         const field = reType.fields.find(f => (f as FieldP).flags.includes("brief"))
-    //         return field ? field.name : undefined
-    //     }
-    //     return undefined
-    // }
-
-    isList(object: any): object is List {
-        if (_.isNil(object)) return false
-        if (_.isString(object)) return false
-        return 'itemType' in object;
-    }
-
-    isTypeList(property: Property): boolean {
-        if (this.isTypeRelation(property)) {
-            if (property.relation) return property.relation.n != 'one'
-            else return false
-        }
-        return (this.isList(property.type))
-    }
-    isTypeRelation(property: Property): boolean {
-        return R.complement(R.isNil)(property.relation)
-    }
-    isPropertyId(property: Property): boolean {
-        if (this.isList(property.type)) return false
-        return property.type === 'id'
-    }
-    getTypeEntity(property: Property): Entity | undefined {
-        if(this.isTypeRelation(property)){
-            return this.entities.find(R.propEq('name', property.relation && property.relation.to))
-        }
-        if (this.isTypeList(property)) {
-            return this.entities.find(R.propEq('name', (property.type as List).itemType))
-        } else {
-            return this.entities.find(R.propEq('name', property.type))
-        }
-    }
-    getBriefPropertyName(entity: Entity): string | undefined {
-        return (entity.directives && ((entity.directives as any)['brief'] as string)) || 'id'
-    }
-
-    isTypeScalar(property: Property): boolean {
-        const scalarTypes = ["String", "", "Int", "Float", "Boolean", "DateTime", "ID"]
-
-        if (this.isList(property.type)) return false
-        return scalarTypes.includes(property.type)
-    }
-
-
+    if (this.isList(property.type)) return false;
+    return scalarTypes.includes(property.type);
+  }
 }
