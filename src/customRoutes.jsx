@@ -6,6 +6,7 @@ import { FunctionEdit } from "./View/FunctionEdit";
 import { FunctionCreate } from "./View/FunctionCreate";
 import Dashboard from "./View/Dashboard";
 import {getNameWithCategory} from '@quick-qui/model-defines'
+import { FunctionCommand } from "./View/FunctionCommand";
 
 export default function(model) {
   return [
@@ -83,7 +84,7 @@ export default function(model) {
                   path={"/" + fun.name}
                   key={fun.name}
                   render={props => (
-                    <FunctionCreate
+                    <FunctionCommand
                       functionModel={fun}
                       model={model}
                       {...props}
