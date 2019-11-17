@@ -53,3 +53,4 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
     return Object.values(tree)
 }
 
+

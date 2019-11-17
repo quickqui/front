@@ -10,7 +10,7 @@ import {oc}  from 'ts-optchain'
 
 export const FunctionEdit = props => {
     const { functionModel, model } = props
-    const resource = functionModel.base.resource
+    const resource = functionModel.resource
     const basePath = "/" + resource
     const entity = oc(model.entities)([]).find(R.propEq('name', resource))
     const redirectFunction = functionModel.redirect ? model.functionModel.functions.find(f => f.name === functionModel.redirect) : undefined

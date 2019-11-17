@@ -19,7 +19,7 @@ const FunctionButton = ({ record, functionModel }) => {
             // TODO 实现 label、type
             to={{
                 pathname: "/" + functionModel.name,
-                //TODO id不应该特殊化。
+                //TODO id是否不应该特殊化。
                 state: { id: record.id, args: functionModel.args },
             }}
         >
@@ -31,7 +31,7 @@ const FunctionButton = ({ record, functionModel }) => {
 export const FunctionList = (props) => {
     const { model, functionModel } = props
     console.log(functionModel)
-    const resource = functionModel.base.resource
+    const resource = functionModel.resource
     const location = { pathname: resource }
     const basePath = "/" + resource
     const filter = functionModel.filter

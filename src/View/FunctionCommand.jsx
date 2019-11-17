@@ -2,15 +2,14 @@ import React from "react";
 import { Create, SimpleForm } from "react-admin";
 import { FormPrefill } from "../Component/FormPrefill";
 
-import { editingFields } from "./EditingFields";
+import { editingFieldsForCommand } from "./EditingFields";
 import * as R from "ramda";
 import { oc } from "ts-optchain";
 
-export const FunctionCreate = props => {
+export const FunctionCommand = props => {
   const { functionModel, model } = props;
   const resource = functionModel.resource;
   const basePath = "/" + resource;
-  const entity = oc(model.entities)([]).find(R.propEq("name", resource));
   const redirectFunction = functionModel.redirect
     ? model.functionModel.functions.find(f => f.name === functionModel.redirect)
     : undefined;
@@ -26,9 +25,7 @@ export const FunctionCreate = props => {
     <Create basePath={basePath} resource={resource} {...props}>
       <FormPrefill
         prefill={{
-          ...copyArgsToPrefill(),
-          createdAt: undefined,
-          updatedAt: undefined
+          ...copyArgsToPrefill()
         }}
       >
         {
@@ -37,7 +34,7 @@ export const FunctionCreate = props => {
         <SimpleForm
           redirect={redirectFunction ? "/" + redirectFunction.name : false}
         >
-          {editingFields(entity, model)}
+          {editingFieldsForCommand(functionModel, model)}
         </SimpleForm>
       </FormPrefill>
     </Create>

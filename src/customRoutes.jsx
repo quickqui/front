@@ -5,6 +5,7 @@ import { FunctionList } from "./View/FunctionList";
 import { FunctionEdit } from "./View/FunctionEdit";
 import { FunctionCreate } from "./View/FunctionCreate";
 import Dashboard from "./View/Dashboard";
+import {getNameWithCategory} from '@quick-qui/model-defines'
 
 export default function(model) {
   return [
@@ -16,46 +17,85 @@ export default function(model) {
     />
   ]
     .concat(
-      model.functionModel.functions.map(fun => {
-        const base = fun.base;
-        if (base.function === "list") {
-          return (
-            <Route
-              exact
-              path={"/" + fun.name}
-              key={fun.name}
-              render={props => (
-                <FunctionList functionModel={fun} model={model} {...props} />
-              )}
-            />
-          );
+      model.functionModel.functions
+      .filter(
+        fun => fun.abstract === false
+      )
+      .map(fun => {
+        const baseFunction = fun.annotations && fun.annotations.implementation;
+        if (baseFunction) {
+          const {category,name}= getNameWithCategory(baseFunction);
+          if (category === "provided") {
+            if (name === "list") {
+              return (
+                <Route
+                  exact
+                  path={"/" + fun.name}
+                  key={fun.name}
+                  render={props => (
+                    <FunctionList
+                      functionModel={fun}
+                      model={model}
+                      {...props}
+                    />
+                  )}
+                />
+              );
+            }
+            if (name === "edit") {
+              return (
+                <Route
+                  exact
+                  path={"/" + fun.name}
+                  key={fun.name}
+                  render={props => (
+                    <FunctionEdit
+                      functionModel={fun}
+                      model={model}
+                      {...props}
+                    />
+                  )}
+                />
+              );
+            }
+            if (name === "create") {
+              return (
+                <Route
+                  exact
+                  path={"/" + fun.name}
+                  key={fun.name}
+                  render={props => (
+                    <FunctionCreate
+                      functionModel={fun}
+                      model={model}
+                      {...props}
+                    />
+                  )}
+                />
+              );
+            }
+            //NOTE 凡是有可能有menupath的都有route
+            //TODO menupath改成page的属性，function的menupath只是一个快捷。
+            if(name === 'command'){
+              return (
+                <Route
+                  exact
+                  path={"/" + fun.name}
+                  key={fun.name}
+                  render={props => (
+                    <FunctionCreate
+                      functionModel={fun}
+                      model={model}
+                      {...props}
+                    />
+                  )}
+                />
+              );
+            }
+            if (name === "iconCard") return [];
+          }
         }
-        if (base.function === "edit") {
-          return (
-            <Route
-              exact
-              path={"/" + fun.name}
-              key={fun.name}
-              render={props => (
-                <FunctionEdit functionModel={fun} model={model} {...props} />
-              )}
-            />
-          );
-        }
-        if (base.function === "create") {
-          return (
-            <Route
-              exact
-              path={"/" + fun.name}
-              key={fun.name}
-              render={props => (
-                <FunctionCreate functionModel={fun} model={model} {...props} />
-              )}
-            />
-          );
-        }
-        if (base.function === "iconCard") return [];
-        throw new Error(`not supported function - ${base.function}`);
+        throw new Error(`not supported function - ${baseFunction}`);
       })
     )
     .flat();
