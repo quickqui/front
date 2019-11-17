@@ -29,6 +29,9 @@
     "ts-optchain": "^0.1.8",
     "typescript": "^3.7.2"
   },
+  "config": {
+    "imageRepo": "nielinjie/quickqiu-front"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -39,9 +42,7 @@
     "docker:tag": " cross-conf-env docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",
     "predocker:publish": "echo Attention! Ensure `docker login` is correct.",
     "docker:publish": "cross-conf-env docker image push $npm_package_config_imageRepo:$npm_package_version",
-    "postdocker:publish": "cross-conf-env docker image push $npm_package_config_imageRepo:latest",
-    "compose:up": "APP_IMAGE=$npm_package_config_imageRepo:$npm_package_version  docker-compose -f front-model-pro.yml up",
-    "compose:down": "docker-compose -f front-model-pro.yml down"
+    "postdocker:publish": "cross-conf-env docker image push $npm_package_config_imageRepo:latest"
   },
   "eslintConfig": {
     "extends": "react-app"
