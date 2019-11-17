@@ -1,6 +1,6 @@
 {
   "name": "quickqui-front",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "dependencies": {
     "@quick-qui/data-provider": "^1.1.3",
     "@quick-qui/model-defines": "^2.0.0",
