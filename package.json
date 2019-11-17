@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "dependencies": {
     "@quick-qui/data-provider": "^1.1.3",
-    "@quick-qui/model-defines": "^1.2.1",
-    "@types/jest": "^24.0.22",
-    "@types/lodash": "^4.14.146",
-    "@types/node": "^12.12.7",
-    "@types/ramda": "^0.26.33",
+    "@quick-qui/model-defines": "^2.0.0",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.148",
+    "@types/node": "^12.12.8",
+    "@types/ramda": "^0.26.34",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
     "axios": "^0.19.0",
@@ -21,9 +21,9 @@
     "ra-data-opencrud": "^0.0.7",
     "ra-realtime": "^2.8.6",
     "ramda": "^0.26.1",
-    "react": "^16.11.0",
+    "react": "^16.12.0",
     "react-admin": "^2.9.8",
-    "react-dom": "^16.11.0",
+    "react-dom": "^16.12.0",
     "react-grid-layout": "^0.17.1",
     "react-scripts": "^3.2.0",
     "ts-optchain": "^0.1.8",
@@ -33,7 +33,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docker:build": "cross-conf-env docker image build . -t $npm_package_config_imageRepo:$npm_package_version",
+    "postdocker:build": "npm run docker:tag",
+    "docker:tag": " cross-conf-env docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",
+    "predocker:publish": "echo Attention! Ensure `docker login` is correct.",
+    "docker:publish": "cross-conf-env docker image push $npm_package_config_imageRepo:$npm_package_version",
+    "postdocker:publish": "cross-conf-env docker image push $npm_package_config_imageRepo:latest",
+    "compose:up": "APP_IMAGE=$npm_package_config_imageRepo:$npm_package_version  docker-compose -f front-model-pro.yml up",
+    "compose:down": "docker-compose -f front-model-pro.yml down"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -53,6 +61,8 @@
   "devDependencies": {
     "customize-cra": "^0.8.0",
     "react-app-rewired": "^2.1.5",
-    "webpack-bundle-analyzer": "^3.6.0"
+    "webpack-bundle-analyzer": "^3.6.0",
+    "cross-conf-env": "^1.1.2",
+    "npm-run-all": "^4.1.5"
   }
 }
