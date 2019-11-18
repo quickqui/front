@@ -30,7 +30,7 @@
     "typescript": "^3.7.2"
   },
   "config": {
-    "imageRepo": "nielinjie/quickqiu-front"
+    "imageRepo": "nielinjie/quickqui-front"
   },
   "scripts": {
     "start": "react-scripts start",
