@@ -6,13 +6,14 @@ import axios from "axios";
 //TODO 怎么去掉‘dist’
 import { DomainModel, Entity, List, Property } from '@quick-qui/model-defines/dist/domain/';
 import { FunctionModel ,Function} from '@quick-qui/model-defines/dist/function';
+import { env } from "../Env";
 
 
 //TODO 改成跨域的模式
 // export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
 //TODO 考虑，是否需要本地模式，那种非常简单的model，或者可以从model server预处理的。
 export const model: Promise<object> = axios
-  .get("/model-server/model")
+  .get(`${env.modelUrl}/model/default`)
   .then(_ => _.data);
 
 export class ModelWithDomainAndFunction {

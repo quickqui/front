@@ -8,6 +8,7 @@ import {
   chain,
   forResource
 } from "@quick-qui/data-provider";
+import { env } from "../Env";
 
 let realtimeSagas: any[] = [];
 
@@ -17,7 +18,7 @@ const backEndDataProvider: DataProvider = (
   params: DataProviderParams
 ) => {
   const json = { type, resource, params };
-  return axios.post("/app/dataProvider", json).then(r => r.data);
+  return axios.post(`${env.appServerUrl}/dataProvider`, json).then(r => r.data);
 };
 const frontEndDataProvider: Promise<DataProvider | undefined> = (async () => {
   const m = (await model) as any;
