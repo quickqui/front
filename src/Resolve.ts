@@ -11,7 +11,9 @@ export const resolve = <T extends unknown>(path: string): Promise<T> => {
   //   ).then(obj => _interopRequireDefault(obj).default as T);
   // }
   if (env.name === "dev_docker") {
-      return import(`../../../extendDir/dist/${path}`).then(obj => _interopRequireDefault(obj).default as T);
+    return import(`../../../extendDir/dist/${path}`).then(
+      obj => _interopRequireDefault(obj).default as T
+    );
   }
   throw new Error("Only can resolve an known path");
 };

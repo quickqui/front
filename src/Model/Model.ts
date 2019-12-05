@@ -1,16 +1,12 @@
-
 import * as R from "ramda";
 import * as _ from "lodash";
 
 import axios from "axios";
 //TODO 怎么去掉‘dist’
-import { DomainModel, Entity, List, Property } from '@quick-qui/model-defines/dist/domain/';
-import { FunctionModel ,Function} from '@quick-qui/model-defines/dist/function';
+import { DomainModel, Entity, List, Property } from "@quick-qui/model-defines";
+import { FunctionModel, Function } from "@quick-qui/model-defines";
 import { env } from "../Env";
 
-
-//TODO 改成跨域的模式
-// export const model: Promise<object> = axios.get(`${env.modelUrl}/model`).then(_ => _.data)
 //TODO 考虑，是否需要本地模式，那种非常简单的model，或者可以从model server预处理的。
 export const model: Promise<object> = axios
   .get(`${env.modelUrl}/model/default`)
@@ -86,24 +82,24 @@ export class ModelWithDomainAndFunction {
     }
   }
   getBriefPropertyName(entity: Entity): string | undefined {
-    return (
-      entity?.annotations?.['brief']||
-      "id"
-    );
+    return entity?.annotations?.["brief"] || "id";
   }
 
   isTypeScalar(property: Property): boolean {
-    const scalarTypes = [
-      "String",
-      "",
-      "Int",
-      "Float",
-      "Boolean",
-      "DateTime",
-      "ID"
-    ];
+    if (property.type === undefined) {
+      return false;
+    } else {
+      const scalarTypes = [
+        "String",
+        "Int",
+        "Float",
+        "Boolean",
+        "DateTime",
+        "ID"
+      ];
 
-    if (this.isList(property.type)) return false;
-    return scalarTypes.includes(property.type);
+      if (this.isList(property.type)) return false;
+      return scalarTypes.includes(property.type);
+    }
   }
 }

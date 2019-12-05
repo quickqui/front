@@ -3,8 +3,6 @@ import { Create, SimpleForm } from "react-admin";
 import { FormPrefill } from "../Component/FormPrefill";
 
 import { editingFieldsForCommand } from "./EditingFields";
-import * as R from "ramda";
-import { oc } from "ts-optchain";
 
 export const FunctionCommand = props => {
   const { functionModel, model } = props;

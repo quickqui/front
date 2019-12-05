@@ -1,8 +1,7 @@
 import React from "react";
 
 import { IconCardView } from "./IconCardView";
-import { Function } from "@quick-qui/model-defines/dist/function";
-import { getNameWithCategory } from "@quick-qui/model-defines";
+import { Function, getNameWithCategory } from "@quick-qui/model-defines/";
 
 //TODO 目前只有dashboard实现了page模型。
 //+ 以react-admin demo为主要依据和借鉴
@@ -52,7 +51,7 @@ export default (props: { model: any }) => {
                 {...props}
                 resource={fun.resource}
                 filter={fun.filter}
-                icon={fun.icon}
+                icon={fun.parameters?.['icon']}
               />
             </div>
           );

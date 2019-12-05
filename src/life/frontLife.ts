@@ -3,10 +3,9 @@ import { model } from "../Model/Model";
 import {
   withImplementationModel,
   Implementation
-} from "@quick-qui/model-defines/dist/implementation/ImplementationModel";
+} from "@quick-qui/model-defines/";
 
 export const onInit = async () => {
-  //TODO optional navigation 状态如何？
   const onInitName: any | undefined = withImplementationModel(
     model
   )?.implementationModel?.implementations?.find(

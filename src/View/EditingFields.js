@@ -11,7 +11,7 @@ import {
   SingleFieldList
 } from "react-admin";
 import { scalarInput } from "../Component/ScalarInput";
-import { StringComponent } from "../Component/StringComponet";
+import { StringComponent } from "../Component/StringComponent";
 function forProperty(property, model) {
   if (model.isTypeRelation(property)) {
     if (model.isTypeList(property)) {

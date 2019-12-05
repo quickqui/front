@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Admin, Resource } from "react-admin";
 
-import * as _ from 'lodash';
+import * as _ from "lodash";
 
 import { ModelWithDomainAndFunction } from "./Model/Model";
 import Menu from "./View/Menu";
@@ -44,7 +44,8 @@ class App extends Component {
     const functions = model.functionModel && model.functionModel.functions;
     const resources = _(functions.map(fun => fun.resource))
       .compact()
-      .uniq().value();
+      .uniq()
+      .value();
     return (
       <Admin
         customRoutes={customRoutes(model)}
@@ -55,13 +56,9 @@ class App extends Component {
         // authProvider={authProvider}
       >
         {resources.map(resource => {
-            console.log(resource)
+          console.log(resource);
           return (
-            <Resource
-              options={{ model }}
-              name={resource}
-              key={resource}
-            />
+            <Resource options={{ model }} name={resource} key={resource} />
           );
         })}
       </Admin>
