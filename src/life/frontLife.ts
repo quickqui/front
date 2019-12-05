@@ -7,13 +7,12 @@ import {
 
 export const onInit = async () => {
   const onInitName: any | undefined = withImplementationModel(
-    model
+    await model
   )?.implementationModel?.implementations?.find(
     (implementation: Implementation) => implementation.name === "front"
   )?.lifeCycle?.["init"];
-
   if (onInitName) {
-    const initFu = await resolve<() => void>(onInitName.onInit);
+    const initFu = await resolve<() => void>(onInitName);
     initFu();
   } else {
     //! don nothing here.
