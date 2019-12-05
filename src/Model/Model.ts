@@ -87,7 +87,7 @@ export class ModelWithDomainAndFunction {
   }
   getBriefPropertyName(entity: Entity): string | undefined {
     return (
-      (entity.directives && ((entity.directives as any)["brief"] as string)) ||
+      entity?.annotations?.['brief']||
       "id"
     );
   }
