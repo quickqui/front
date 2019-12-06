@@ -4,7 +4,7 @@ import { Admin, Resource } from "react-admin";
 
 import * as _ from "lodash";
 
-import { ModelWithDomainAndFunction } from "./Model/Model";
+import { ModelWrapped } from "./Model/Model";
 import Menu from "./View/Menu";
 import { onInit } from "./life/frontLife";
 
@@ -28,7 +28,7 @@ class App extends Component {
       model.then(data => {
         this.setState({
           ...this.state,
-          model: new ModelWithDomainAndFunction(data)
+          model: new ModelWrapped(data)
         });
       });
     });
@@ -41,7 +41,7 @@ class App extends Component {
       return <div>Loading</div>;
     }
 
-    const functions = model.functionModel && model.functionModel.functions;
+    const functions = model.functionModel?.functions ?? [];
     const resources = _(functions.map(fun => fun.resource))
       .compact()
       .uniq()

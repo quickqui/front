@@ -18,11 +18,10 @@ export default function(model) {
     />
   ]
     .concat(
-      model.functionModel.functions
+      (model.functionModel?.functions ?? [])
         .filter(fun => fun.abstract === false)
         .map(fun => {
-          const baseFunction =
-            fun.annotations && fun.annotations.implementation;
+          const baseFunction = fun.annotations?.["implementation"];
           if (baseFunction) {
             const { category, name } = getNameWithCategory(baseFunction);
             if (category === "provided") {

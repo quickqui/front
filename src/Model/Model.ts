@@ -3,7 +3,7 @@ import * as _ from "lodash";
 
 import axios from "axios";
 //TODO 怎么达成二级namespace？比如from @quick-qui/model-defines/domain’
-import { DomainModel, Entity, List, Property } from "@quick-qui/model-defines";
+import { DomainModel, Entity, List, Property, PageModel } from "@quick-qui/model-defines";
 import { FunctionModel, Function } from "@quick-qui/model-defines";
 import { env } from "../Env";
 
@@ -11,16 +11,19 @@ export const model: Promise<object> = axios
   .get(`${env.modelUrl}/models/default`)
   .then(_ => _.data);
 
-export class ModelWithDomainAndFunction {
+export class ModelWrapped {
   readonly domainModel: DomainModel;
   readonly functionModel: FunctionModel;
+  readonly pageModel: PageModel;
 
   constructor(model: {
     domainModel: DomainModel;
     functionModel: FunctionModel;
+    pageModel: PageModel
   }) {
     this.domainModel = model.domainModel;
     this.functionModel = model.functionModel;
+    this.pageModel = model.pageModel
   }
 
   get entities(): Entity[] {
