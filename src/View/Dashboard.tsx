@@ -29,12 +29,12 @@ export default (props: { model: any }) => {
 
   return (
     <div style={gridStyle.container}>
-      {//TODO 增加其他支持
+      {//TODO 增加其他类型的function支持
       functions
         .filter((fun: any) => {
           if (fun.abstract === true) return false;
           const baseFunction =
-            fun.annotations && fun.annotations.implementation;
+            fun.annotations?.implementation;
           if (baseFunction) {
             const { category, name } = getNameWithCategory(baseFunction);
             return category === "provided" && name === "iconCard";

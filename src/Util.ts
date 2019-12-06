@@ -34,7 +34,7 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
             ? (obj.path as string)
             : (obj.path as string[]).join("/")
       };
-      if (i == splitpath.length - 1) {
+      if (i === splitpath.length - 1) {
         node.isDirectory = false;
       }
       ptr[splitpath[i]] = ptr[splitpath[i]] || node;

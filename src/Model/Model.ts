@@ -2,12 +2,11 @@ import * as R from "ramda";
 import * as _ from "lodash";
 
 import axios from "axios";
-//TODO 怎么去掉‘dist’
+//TODO 怎么达成二级namespace？比如from @quick-qui/model-defines/domain’
 import { DomainModel, Entity, List, Property } from "@quick-qui/model-defines";
 import { FunctionModel, Function } from "@quick-qui/model-defines";
 import { env } from "../Env";
 
-//TODO 考虑，是否需要本地模式，那种非常简单的model，或者可以从model server预处理的。
 export const model: Promise<object> = axios
   .get(`${env.modelUrl}/models/default`)
   .then(_ => _.data);
@@ -55,7 +54,7 @@ export class ModelWithDomainAndFunction {
 
   isTypeList(property: Property): boolean {
     if (this.isTypeRelation(property)) {
-      if (property.relation) return property.relation.n != "one";
+      if (property.relation) return property.relation.n !== "one";
       else return false;
     }
     return this.isList(property.type);
