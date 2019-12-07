@@ -18,84 +18,58 @@ export default function(model) {
     />
   ]
     .concat(
-      (model.functionModel?.functions ?? [])
-        .filter(fun => fun.abstract === false)
-        .map(fun => {
-          const baseFunction = fun.annotations?.["implementation"];
-          if (baseFunction) {
-            const { category, name } = getNameWithCategory(baseFunction);
-            if (category === "provided") {
-              if (name === "list") {
-                return (
-                  <Route
-                    exact
-                    path={"/" + fun.name}
-                    key={fun.name}
-                    render={props => (
-                      <FunctionList
-                        functionModel={fun}
-                        model={model}
-                        {...props}
-                      />
-                    )}
-                  />
-                );
-              }
-              if (name === "edit") {
-                return (
-                  <Route
-                    exact
-                    path={"/" + fun.name}
-                    key={fun.name}
-                    render={props => (
-                      <FunctionEdit
-                        functionModel={fun}
-                        model={model}
-                        {...props}
-                      />
-                    )}
-                  />
-                );
-              }
-              if (name === "create") {
-                return (
-                  <Route
-                    exact
-                    path={"/" + fun.name}
-                    key={fun.name}
-                    render={props => (
-                      <FunctionCreate
-                        functionModel={fun}
-                        model={model}
-                        {...props}
-                      />
-                    )}
-                  />
-                );
-              }
-              //NOTE 凡是有可能有menupath的都有route
-              //TODO menupath改成page的属性，function的menupath只是一个快捷。
-              if (name === "command") {
-                return (
-                  <Route
-                    exact
-                    path={"/" + fun.name}
-                    key={fun.name}
-                    render={props => (
-                      <FunctionCommand
-                        functionModel={fun}
-                        model={model}
-                        {...props}
-                      />
-                    )}
-                  />
-                );
-              }
-              if (name === "iconCard") return [];
-            }
-          }
-          throw new Error(`not supported function - ${baseFunction}`);
-        })
+      (model.pageModel?.pages ?? []).map(page => {
+        return getRoute(page, model);
+
+        //NOTE 凡是有可能有menupath的都有route
+        //TODO menupath改成page的属性，function的menupath只是一个快捷。
+      })
     )
     .flat();
+}
+function getRoute(page, model) {
+  return (
+    <Route
+      exact
+      path={"/" + page.name}
+      key={page.name}
+      render={props => getControlAndView(model, props)}
+    />
+  );
+}
+function getControlAndView(page, model, props) {
+  //TODO 先支持单function的page再说
+  const funName = page.places?.[0]?.function;
+  const fun = model.functionModel?.functions?.find(f => f.name === funName);
+  if (fun) {
+    const baseFunction = fun.annotations?.["implementation"];
+    if (baseFunction) {
+      const { category, name } = getNameWithCategory(baseFunction);
+      if (category === "provided") {
+        switch (name) {
+          case "command":
+            return (
+              <FunctionCommand functionModel={fun} model={model} {...props} />
+            );
+          case "create":
+            return (
+              <FunctionCreate functionModel={fun} model={model} {...props} />
+            );
+          case "edit":
+            return (
+              <FunctionEdit functionModel={fun} model={model} {...props} />
+            );
+          case "list":
+            return (
+              <FunctionList functionModel={fun} model={model} {...props} />
+            );
+          default:
+            throw new Error(`not supported function - ${name}`);
+        }
+      }
+    }
+    throw new Error(`not provided function`);
+  } else {
+    throw new Error(`no function find -${funName}`);
+  }
 }

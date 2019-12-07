@@ -30,18 +30,16 @@ class Menu extends PureComponent {
 
   toTree = model => {
     const withPath = _.compact(
-      model.functions.map(fun => {
-        if (fun.entry && fun.entry.menuPath) {
+      model.pageModel?.pages?.map(page => {
+        if (page.menuPath) {
           return {
-            path: fun.entry.menuPath,
-            object: fun
+            path: page.menuPath,
+            object: page
           };
         } else return undefined;
       })
     );
-    // console.log(withPath)
     const tree = filesToTreeNodes(withPath);
-    // console.log(tree)
     return tree;
   };
 
@@ -56,14 +54,14 @@ class Menu extends PureComponent {
           icon={<MoreHoriz />}
           key={treeNode.path}
         >
-          {treeNode.children.map(this.toElement, open, onMenuClick)}
+          {treeNode.children.map(ch=> this.toElement(ch, open, onMenuClick))}
         </SubMenu>
       );
     } else {
       return (
         <MenuItemLink
           to={"/" + treeNode.object.name}
-          primaryText={treeNode.object.name}
+          primaryText={treeNode.object.name} //TODO text需要另外来，或者从path取
           leftIcon={createElement(icons[treeNode.object.icon || "Label"])}
           onClick={onMenuClick}
           key={treeNode.path}
