@@ -15,7 +15,7 @@ export const FunctionCreate = props => {
     : undefined;
 
   function copyArgsToPrefill() {
-    const prefill = functionModel.command.prefill;
+    const prefill = functionModel.command?.prefill ?? {};
     //TODO 表达式支持。
     //包裹在${}中的，再进行表达式计算
     const re = { ...prefill };

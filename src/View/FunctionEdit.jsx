@@ -9,13 +9,13 @@ export const FunctionEdit = props => {
   const { functionModel, model } = props;
   const resource = functionModel.resource;
   const basePath = "/" + resource;
-  const entity = (model.entities??[]).find(R.propEq("name", resource));
+  const entity = (model.entities ?? []).find(R.propEq("name", resource));
   const redirectFunction = functionModel.redirect
     ? model.functionModel.functions.find(f => f.name === functionModel.redirect)
     : undefined;
 
   function copyArgsToPrefill() {
-    const prefill = functionModel.command.prefill;
+    const prefill = functionModel.command?.prefill ?? {};
     //TODO 表达式支持。
     //包裹在${}中的，再进行表达式计算
     const re = { ...prefill };
