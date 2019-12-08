@@ -13,18 +13,18 @@ export interface WithPath<T> {
   object: T;
 }
 
-//FIXME directory节点的path和pathstring有问题。
+//FIXME directory节点的path和pathString有问题。
 export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
   var tree = {};
   function addnode(obj: WithPath<T>) {
-    var splitpath: string[] =
+    var splitPath: string[] =
       R.type(obj.path) === "String"
         ? (obj.path as string).replace(/^\/|\/$/g, "").split("/")
         : (obj.path as string[]);
     var ptr: any = tree;
-    for (let i = 0; i < splitpath.length; i++) {
+    for (let i = 0; i < splitPath.length; i++) {
       let node: TreeNode<T> = {
-        name: splitpath[i],
+        name: splitPath[i],
         children: [],
         isDirectory: true,
         path: obj.path,
@@ -34,12 +34,12 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
             ? (obj.path as string)
             : (obj.path as string[]).join("/")
       };
-      if (i === splitpath.length - 1) {
+      if (i === splitPath.length - 1) {
         node.isDirectory = false;
       }
-      ptr[splitpath[i]] = ptr[splitpath[i]] || node;
-      ptr[splitpath[i]].children = ptr[splitpath[i]].children || {};
-      ptr = ptr[splitpath[i]].children;
+      ptr[splitPath[i]] = ptr[splitPath[i]] || node;
+      ptr[splitPath[i]].children = ptr[splitPath[i]].children || {};
+      ptr = ptr[splitPath[i]].children;
     }
   }
   function objectToArr(node: any) {

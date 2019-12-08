@@ -13,10 +13,10 @@ export const FunctionCommand = props => {
     : undefined;
 
   function copyArgsToPrefill() {
-    const prefills = functionModel.prefill;
+    const prefill = functionModel.command.prefill;
     //TODO 表达式支持。
     //包裹在${}中的，再进行表达式计算
-    const re = { ...prefills };
+    const re = { ...prefill };
     return re;
   }
   return (

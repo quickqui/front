@@ -64,7 +64,7 @@ export const FunctionList = props => {
               page => page.name === link.page || page.name === `oneFunctionPage${link.page}`
             );
             if (page) {
-              return <FunctionButton key={page.name} page text={link.label} />;
+              return <FunctionButton key={page.name} page={page} text={link.label} />;
             } else {
               return undefined;
             }

@@ -61,8 +61,8 @@ class Menu extends PureComponent {
       return (
         <MenuItemLink
           to={"/" + treeNode.object.name}
-          primaryText={treeNode.object.name} //TODO text需要另外来，或者从path取
-          leftIcon={createElement(icons[treeNode.object.icon || "Label"])}
+          primaryText={treeNode.name} //TODO text需要另外来，或者从path取
+          leftIcon={createElement(icons[treeNode.object?.icon ?? "Label"]??icons['Label'])}
           onClick={onMenuClick}
           key={treeNode.path}
         />

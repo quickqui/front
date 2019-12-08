@@ -33,7 +33,7 @@ function getRoute(page, model) {
       exact
       path={"/" + page.name}
       key={page.name}
-      render={props => getControlAndView(model, props)}
+      render={props => getControlAndView(page ,model, props)}
     />
   );
 }

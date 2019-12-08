@@ -90,6 +90,7 @@ export function editingFieldsForCommand(functionModel, model) {
 }
 export function editingFields(entity, model) {
   return entity.properties
+  //TODO 改成由presentation决定？
     .filter(
       property => !["id", "createdAt", "updatedAt"].includes(property.name)
     )
