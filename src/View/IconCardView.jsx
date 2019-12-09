@@ -4,8 +4,7 @@ import { ListController } from "react-admin";
 import IconCard from "../Component/IconCard";
 
 export const IconCardView = props => {
-    console.log(props);
-  const { resource } = props;
+  const  resource  = props['functionModel'].resource;
   const location = { pathname: resource };
   const basePath = "/" + resource;
   return (
@@ -17,7 +16,8 @@ export const IconCardView = props => {
     >
       {controllerProps => (
         <IconCard
-          icon={props.icon}
+          icon={props.functionModel?.parameters?.["icon"]}
+          text={props.functionModel?.name}
           value={controllerProps.total}
           {...props}
           {...controllerProps}

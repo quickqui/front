@@ -83,7 +83,6 @@ class Menu extends PureComponent {
 
     return (
       <div>
-        <DashboardMenuItem onClick={onMenuClick} />
         {functionTree.map(_ => this.toElement(_, open, onMenuClick))}
       </div>
     );
