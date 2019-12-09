@@ -16,7 +16,7 @@ export interface WithPath<T> {
 //FIXME directory节点的path和pathString有问题。
 export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
   var tree = {};
-  function addnode(obj: WithPath<T>) {
+  function addNode(obj: WithPath<T>) {
     var splitPath: string[] =
       R.type(obj.path) === "String"
         ? (obj.path as string).replace(/^\/|\/$/g, "").split("/")
@@ -53,7 +53,7 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
       node.children.forEach(objectToArr);
     }
   }
-  arr.map(addnode);
+  arr.map(addNode);
   objectToArr(tree);
   return Object.values(tree);
 }

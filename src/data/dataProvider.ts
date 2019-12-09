@@ -46,9 +46,10 @@ const frontEndDataProvider: Promise<DataProvider | undefined> = (async () => {
   return undefined;
 })();
 
-export const dataProvider: Promise<
-  [DataProvider, any[]]
-> = frontEndDataProvider.then(_ => {
+export const dataProvider: Promise<[
+  DataProvider,
+  any[]
+]> = frontEndDataProvider.then(_ => {
   const provider = _ ? chain(_, backEndDataProvider) : backEndDataProvider;
   return [provider, realtimeSagas.map(s => s(provider))];
 });

@@ -54,15 +54,17 @@ class Menu extends PureComponent {
           icon={<MoreHoriz />}
           key={treeNode.path}
         >
-          {treeNode.children.map(ch=> this.toElement(ch, open, onMenuClick))}
+          {treeNode.children.map(ch => this.toElement(ch, open, onMenuClick))}
         </SubMenu>
       );
     } else {
       return (
         <MenuItemLink
           to={"/" + treeNode.object.name}
-          primaryText={treeNode.name} //TODO text需要另外来，或者从path取
-          leftIcon={createElement(icons[treeNode.object?.icon ?? "Label"]??icons['Label'])}
+          primaryText={treeNode.name}
+          leftIcon={createElement(
+            icons[treeNode.object?.icon ?? "Label"] ?? icons["Label"]
+          )}
           onClick={onMenuClick}
           key={treeNode.path}
         />
