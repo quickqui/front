@@ -9,9 +9,7 @@ module.exports = function(app) {
       proxy("/model-server", {
         target: "http://model-server:1111",
         pathRewrite: {
-          "^/model-server/dataModel": "/dataModel",
-          "^/model-server/model": "/model",
-          "^/model-server/deploy": "/deploy"
+          "^/model-server": "/"
         }
       })
     );
@@ -24,10 +22,10 @@ module.exports = function(app) {
       })
     );
     app.use(
-      proxy("/app", {
+      proxy("/app-server", {
         target: "http://app-server:4000",
         pathRewrite: {
-          "^/app": "/"
+          "^/app-server": "/"
         }
       })
     );
@@ -37,9 +35,7 @@ module.exports = function(app) {
       proxy("/model-server", {
         target: "http://localhost:1111",
         pathRewrite: {
-          "^/model-server/dataModel": "/dataModel",
-          "^/model-server/model": "/model",
-          "^/model-server/deploy": "/deploy"
+          "^/model-server": "/"
         }
       })
     );
@@ -52,10 +48,10 @@ module.exports = function(app) {
       })
     );
     app.use(
-      proxy("/app", {
+      proxy("/app-server", {
         target: "http://localhost:4000",
         pathRewrite: {
-          "^/app": "/"
+          "^/app-server": "/"
         }
       })
     );
