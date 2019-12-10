@@ -7,7 +7,6 @@ import * as icons from "@material-ui/icons";
 
 import { withRouter } from "react-router-dom";
 import {
-  DashboardMenuItem,
   MenuItemLink,
   getResources,
   translate
