@@ -8,7 +8,7 @@ import { FunctionModel, Function } from "@quick-qui/model-defines";
 import { env } from "../Env";
 
 export const model: Promise<object> = axios
-  .get(`${env.modelUrl}/models/default`)
+  .get("/model-server/model/default")
   .then(_ => _.data);
 
 export class ModelWrapped {
