@@ -3,7 +3,14 @@ import * as _ from "lodash";
 
 import axios from "axios";
 //TODO 怎么达成二级namespace？比如from @quick-qui/model-defines/domain’
-import { DomainModel, Entity, List, Property, PageModel } from "@quick-qui/model-defines";
+import {
+  DomainModel,
+  Entity,
+  List,
+  Property,
+  PageModel,
+  PresentationModel
+} from "@quick-qui/model-defines";
 import { FunctionModel, Function } from "@quick-qui/model-defines";
 import { env } from "../Env";
 
@@ -15,15 +22,20 @@ export class ModelWrapped {
   readonly domainModel: DomainModel;
   readonly functionModel: FunctionModel;
   readonly pageModel: PageModel;
+  readonly presentationModel: PresentationModel;
+  readonly original: any;
 
   constructor(model: {
     domainModel: DomainModel;
     functionModel: FunctionModel;
-    pageModel: PageModel
+    pageModel: PageModel;
+    presentationModel: PresentationModel;
   }) {
     this.domainModel = model.domainModel;
     this.functionModel = model.functionModel;
-    this.pageModel = model.pageModel
+    this.pageModel = model.pageModel;
+    this.presentationModel = model.presentationModel;
+    this.original = model;
   }
 
   get entities(): Entity[] {
@@ -33,21 +45,6 @@ export class ModelWrapped {
   get functions(): Function[] {
     return this.functionModel.functions || [];
   }
-
-  // findField(flag: string): [Type, Field] | undefined {
-  //     const zipTypeWithField: [Type, Field][] = this.dataModel.types.flatMap(t => t.fields.map(f => [t, f]))
-  //     if (!zipTypeWithField) return undefined
-  //     return zipTypeWithField.find(([t, f]) => (f as FieldP).flags.includes(flag))
-  // }
-
-  // getBriefFieldName(typeRef: TypeRef): string | undefined {
-  //     const reType = this.dataModel.types.find(t => t.name === typeRef.name)
-  //     if (reType) {
-  //         const field = reType.fields.find(f => (f as FieldP).flags.includes("brief"))
-  //         return field ? field.name : undefined
-  //     }
-  //     return undefined
-  // }
 
   isList(object: any): object is List {
     if (_.isNil(object)) return false;

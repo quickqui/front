@@ -5,7 +5,7 @@ import { FormPrefill } from "../Component/FormPrefill";
 import { editingFieldsForCommand } from "./EditingFields";
 
 export const FunctionCommand = props => {
-  const { functionModel, model } = props;
+  const { functionModel, model,presentation } = props;
   const resource = functionModel.resource;
   const basePath = "/" + resource;
   const redirectFunction = functionModel.redirect
@@ -32,7 +32,7 @@ export const FunctionCommand = props => {
         <SimpleForm
           redirect={redirectFunction ? "/" + redirectFunction.name : false}
         >
-          {editingFieldsForCommand(functionModel, model)}
+          {editingFieldsForCommand(functionModel, model,presentation)}
         </SimpleForm>
       </FormPrefill>
     </Create>

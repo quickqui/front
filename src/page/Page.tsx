@@ -4,7 +4,8 @@ import {
   Function,
   getNameWithCategory,
   StringKeyObject,
-  Place
+  Place,
+  Presentation
 } from "@quick-qui/model-defines";
 import { ModelWrapped } from "../Model";
 
@@ -15,6 +16,7 @@ import { FunctionCommand } from "../View/FunctionCommand";
 import { IconCardView } from "../View/IconCardView";
 
 import _ from "lodash";
+import { findPresentation } from "@quick-qui/model-defines/dist/presentation/PresentationModel";
 
 export function getPage(page: Page, model: ModelWrapped, props: any) {
   const gride = +page?.layout?.["gride"] ?? 3;
@@ -39,10 +41,15 @@ export function getPage(page: Page, model: ModelWrapped, props: any) {
         if (fn) {
           const size = place.layout?.size ?? 1;
           const itemStyle = { gridColumn: `span ${size}` };
+          const presentation = findPresentation(
+            model.original,
+            place.presentation,
+            fn.resource
+          );
 
           return (
             <div style={{ ...gridStyle.item, ...itemStyle }}>
-              {getByFunction(fn, model, props, page.name)}
+              {getByFunction(fn, model, presentation, page.name, props)}
             </div>
           );
         } else {
@@ -51,40 +58,13 @@ export function getPage(page: Page, model: ModelWrapped, props: any) {
       })}
     </div>
   );
-
-  // const functions = _(
-  //   page.places
-  //     ?.map((place: Place) => place.function)
-  //     ?.map((functionName: string) =>
-  //       model.functions.find((fun: Function) => functionName === fun.name)
-  //     )
-  // )
-  //   .compact()
-  //   .toArray()
-  //   .value();
-  // if (functions?.length ?? 0 > 0) {
-  //   return (
-  //     <>
-  //       <div style={gridStyle.container}>
-  //         {functions.map(fun => {
-  //           return (
-  //             <div style={gridStyle.item}>
-  //               {getByFunction(fun, model, props, page.name)}
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-  //     </>
-  //   );
-  // } else {
-  //   return undefined;
-  // }
 }
 function getByFunction(
   fun: Function,
   model: ModelWrapped,
-  props: any,
-  title: string
+  presentation: Presentation | undefined,
+  title: string,
+  props: any
 ) {
   const baseFunction = fun.annotations?.["implementation"];
   if (baseFunction) {
@@ -104,6 +84,7 @@ function getByFunction(
           functionModel: fun,
           model,
           title,
+          presentation,
           ...props
         });
       } else {

@@ -25,10 +25,11 @@ const FunctionButton = ({ record, page, text }) => {
 };
 
 export const FunctionList = props => {
-  const { model, functionModel } = props;
+  const { model, functionModel,presentation } = props;
   console.log(functionModel);
   const resource = functionModel.resource;
   const location = { pathname: resource };
+
   const basePath = "/" + resource;
   const filter = functionModel.filter;
   const sort =
@@ -56,7 +57,7 @@ export const FunctionList = props => {
       {...props}
     >
       <Datagrid>
-        {listingFields(entity, model)}
+        {listingFields(entity, model,presentation)}
         {functionModel.links
           ?.filter(link => link.type === "entity")
           ?.map(link => {

@@ -10,6 +10,7 @@ import {
   ChipField,
   SingleFieldList
 } from "react-admin";
+import { rulesHelp } from "@quick-qui/model-defines";
 import { scalarInput } from "../Component/ScalarInput";
 import { StringComponent } from "../Component/StringComponent";
 function forProperty(property, model) {
@@ -80,19 +81,25 @@ function forProperty(property, model) {
 
   return scalarInput({ property, source: property.name, key: property.name });
 }
-export function editingFieldsForCommand(functionModel, model) {
+export function editingFieldsForCommand(functionModel, model, presentation) {
   const properties = functionModel.properties;
   if (properties) {
-    return properties.map(property => forProperty(property, model));
+    return properties
+      .filter(
+        //TODO presentation的其他规则？
+        property => !rulesHelp(presentation, property).isHidden
+      )
+      .map(property => forProperty(property, model));
   } else {
     return [];
   }
 }
-export function editingFields(entity, model) {
+export function editingFields(entity, model, presentation) {
   return entity.properties
-  //TODO 改成由presentation决定？
     .filter(
-      property => !["id", "createdAt", "updatedAt"].includes(property.name)
+      //TODO presentation的其他规则？
+
+      property => !rulesHelp(presentation, property).isHidden
     )
     .map(property => forProperty(property, model));
 }
