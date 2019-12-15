@@ -2,7 +2,7 @@ import React from "react";
 import { List, Datagrid } from "react-admin";
 import { listingFields } from "./ListingFields";
 
-import * as _ from "lodash";
+import _ from "lodash";
 import * as R from "ramda";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";

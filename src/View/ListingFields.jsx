@@ -2,13 +2,10 @@ import React from "react";
 
 import { FunctionField, ReferenceField, TextField } from "react-admin";
 import { scalarField } from "../Component/ScalarField";
-import { rulesHelp } from "@quick-qui/model-defines";
+import { applyPresentation } from "./PresentationUtil";
 
 export function listingFields(entity, model, presentation) {
-  return entity.properties
-    .filter(prop => {
-      return !(rulesHelp(presentation, prop).isHidden);
-    })
+  return applyPresentation(presentation, entity.properties)
     .map(property => {
       if (model.isTypeRelation(property)) {
         if (model.isTypeList(property)) {
@@ -54,5 +51,5 @@ export function listingFields(entity, model, presentation) {
         source: property.name,
         key: property.name
       });
-    });
+    })
 }

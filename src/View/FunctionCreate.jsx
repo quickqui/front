@@ -6,7 +6,7 @@ import { editingFields } from "./EditingFields";
 import * as R from "ramda";
 
 export const FunctionCreate = props => {
-  const { functionModel, model } = props;
+  const { functionModel, model ,presentation} = props;
   const resource = functionModel.resource;
   const basePath = "/" + resource;
   const entity = (model.entities ?? []).find(R.propEq("name", resource));
@@ -36,7 +36,7 @@ export const FunctionCreate = props => {
         <SimpleForm
           redirect={redirectFunction ? "/" + redirectFunction.name : false}
         >
-          {editingFields(entity, model)}
+          {editingFields(entity, model,presentation)}
         </SimpleForm>
       </FormPrefill>
     </Create>
