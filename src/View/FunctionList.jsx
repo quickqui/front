@@ -42,7 +42,6 @@ export const FunctionList = props => {
 
   const entity = model.entities.find(R.propEq("name", resource));
 
-  //TODO  目前filter只能是key、value的形式，不能实现表达式方式。需要试一下其他方式。
   return (
     <List
       location={location}

@@ -1,10 +1,9 @@
 const proxy = require("http-proxy-middleware");
 
 const env = process.env.ENV;
-//TODO 改成跨域的模式。
 module.exports = function(app) {
   console.log(env);
-  if (env == "dev_docker") {
+  if (env === "dev_docker") {
     app.use(
       proxy("/model-server", {
         target: "http://model-server:1111",
@@ -30,7 +29,7 @@ module.exports = function(app) {
       })
     );
   }
-  if (env == "dev_local") {
+  if (env === "dev_local") {
     app.use(
       proxy("/model-server", {
         target: "http://localhost:1111",

@@ -17,7 +17,6 @@ function getRoute(page, model) {
       exact
       path={"/" + page.name}
       key={page.name}
-      //TODO 从这里改成目前dashboard的逻辑。
       render={props => getPage(page, model, props)}
     />
   );
