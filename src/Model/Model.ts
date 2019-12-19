@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import * as _ from "lodash";
+import _ from "lodash";
 
 import axios from "axios";
 //TODO 怎么达成二级namespace？比如from @quick-qui/model-defines/domain’
@@ -9,10 +9,10 @@ import {
   List,
   Property,
   PageModel,
-  PresentationModel
+  PresentationModel,
+  ExchangeModel
 } from "@quick-qui/model-defines";
 import { FunctionModel, Function } from "@quick-qui/model-defines";
-import { env } from "../Env";
 
 export const model: Promise<object> = axios
   .get("/model-server/models/default")
@@ -23,18 +23,22 @@ export class ModelWrapped {
   readonly functionModel: FunctionModel;
   readonly pageModel: PageModel;
   readonly presentationModel: PresentationModel;
+  readonly exchangeModel: ExchangeModel;
   readonly original: any;
 
   constructor(model: {
+    //TODO 用withXXXModel机制来替代？
     domainModel: DomainModel;
     functionModel: FunctionModel;
     pageModel: PageModel;
     presentationModel: PresentationModel;
+    exchangeModel: ExchangeModel;
   }) {
     this.domainModel = model.domainModel;
     this.functionModel = model.functionModel;
     this.pageModel = model.pageModel;
     this.presentationModel = model.presentationModel;
+    this.exchangeModel =  model.exchangeModel;
     this.original = model;
   }
 

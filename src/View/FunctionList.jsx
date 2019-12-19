@@ -15,7 +15,8 @@ const FunctionButton = ({ record, page, text }) => {
       to={{
         pathname: "/" + page.name,
         //TODO id是否不应该特殊化。
-        //TODO page 有没有参数？
+        //TODO page如果有参数从这里传入。
+        
         state: { id: record.id }
       }}
     >

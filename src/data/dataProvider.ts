@@ -9,8 +9,8 @@ import {
   forResource
 } from "@quick-qui/data-provider";
 import { env } from "../Env";
-
-let realtimeSagas: any[] = [];
+import { withExchangeModel } from "@quick-qui/model-defines";
+import _ from "lodash";
 
 const backEndDataProvider: DataProvider = (
   type: string,
@@ -20,36 +20,47 @@ const backEndDataProvider: DataProvider = (
   const json = { type, resource, params };
   return axios.post(`${env.appServerUrl}/dataProvider`, json).then(r => r.data);
 };
-const frontEndDataProvider: Promise<DataProvider | undefined> = (async () => {
-  const m = (await model) as any;
-  const dataSourcesDefinitions =
-    m && m.dataSources
-      ? m.dataSources.filter((dataSource: any) => dataSource.end === "front")
-      : undefined;
-  if (dataSourcesDefinitions) {
-    const realtimeDatasourceDefs = dataSourcesDefinitions.filter(
-      (datasource: any) => !!datasource.realtime
-    );
-    realtimeSagas = realtimeDatasourceDefs.map((def: any) =>
-      createRealtimeSaga(def.resource, def.realtime)
-    );
-    const dataProviders: Promise<DataProvider>[] = dataSourcesDefinitions.map(
-      async (dataSourceD: any) => {
-        const dataProvider = await resolve<DataProvider>(
-          dataSourceD.dataProvider
-        );
-        return forResource(dataSourceD.resource, dataProvider);
+const frontEndDataProvider: Promise<
+  { dataProvider: DataProvider; realtimeSagas: any[] } | undefined
+> = (async () => {
+  const exchangeModel = withExchangeModel(await model)?.exchangeModel;
+  const exchanges =
+    exchangeModel?.exchanges?.filter(exchange => {
+      return exchange.to === "front";
+    }) ?? [];
+  if (_.isEmpty(exchanges)) return undefined;
+  const realtimeSagas = exchanges
+    .map(exchange => {
+      const realtime = exchange.parameters?.["realtime"];
+      if (realtime) {
+        //TODO 支持多resource的exchange的realtime
+        //TODO realtimeSaga 好像被从ra3.0撤出了，看看之后怎么支持realtime
+        return [createRealtimeSaga(exchange.resources[0], realtime)];
+      } else {
+        return [];
       }
-    );
-    return Promise.all(dataProviders).then(dataPS => dataPS.reduce(chain));
-  }
-  return undefined;
+    })
+    .flat();
+
+  const providers = exchanges.map(async exchange => {
+    //TODO 支持extension以外的方式
+    const dataProvider = await resolve<DataProvider>(exchange.extension!);
+    return forResource(exchange.resources, dataProvider);
+  });
+
+  return Promise.all(providers)
+    .then(dataPS => dataPS.reduce(chain))
+    .then(ps => {
+      return { dataProvider: ps, realtimeSagas: realtimeSagas };
+    });
 })();
 
 export const dataProvider: Promise<[
   DataProvider,
   any[]
-]> = frontEndDataProvider.then(_ => {
-  const provider = _ ? chain(_, backEndDataProvider) : backEndDataProvider;
-  return [provider, realtimeSagas.map(s => s(provider))];
+]> = frontEndDataProvider.then(dpr => {
+  const dp = dpr?.dataProvider;
+  const realtimeSagas = dpr?.realtimeSagas;
+  const provider = dp ? chain(dp, backEndDataProvider) : backEndDataProvider;
+  return [provider, realtimeSagas?.map(s => s(provider)) ?? []];
 });

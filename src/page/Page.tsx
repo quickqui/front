@@ -14,7 +14,6 @@ import { FunctionCreate } from "../View/FunctionCreate";
 import { FunctionCommand } from "../View/FunctionCommand";
 import { IconCardView } from "../View/IconCardView";
 
-import _ from "lodash";
 import { findPresentation } from "@quick-qui/model-defines/dist/presentation/PresentationModel";
 
 export function getPage(page: Page, model: ModelWrapped, props: any) {
@@ -31,7 +30,7 @@ export function getPage(page: Page, model: ModelWrapped, props: any) {
         presentation: compactList
  */
 
-  const gride = +page?.layout?.["gride"] ?? 3;
+  const gride = +(page?.layout?.["gride"]) ?? 3;
   const gridStyle = {
     container: {
       display: "grid",
@@ -63,7 +62,7 @@ export function getPage(page: Page, model: ModelWrapped, props: any) {
             );
 
             return (
-              <div
+              <div key={fn.name}
                 style={{
                   ...gridStyle.item,
                   ...itemStyle
