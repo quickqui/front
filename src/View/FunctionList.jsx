@@ -32,7 +32,7 @@ export const FunctionList = props => {
   const location = { pathname: resource };
 
   const basePath = "/" + resource;
-  const filter = functionModel.filter;
+  const filter = functionModel.query?.filter;
   const sort =
     functionModel.sort &&
     _(functionModel.sort)

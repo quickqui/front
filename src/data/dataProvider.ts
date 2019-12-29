@@ -20,13 +20,13 @@ const backEndDataProvider: DataProvider = (
   const json = { type, resource, params };
   return axios.post(`${env.appServerUrl}/dataProvider`, json).then(r => r.data);
 };
-const frontEndDataProvider: Promise<
+const thisEndDataProvider: Promise<
   { dataProvider: DataProvider; realtimeSagas: any[] } | undefined
 > = (async () => {
   const exchangeModel = withExchangeModel(await model)?.exchangeModel;
   const exchanges =
     exchangeModel?.exchanges?.filter(exchange => {
-      return exchange.to === "front";
+      return exchange.to === "front" && exchange.from !== "fake";
     }) ?? [];
   if (_.isEmpty(exchanges)) return undefined;
   const realtimeSagas = exchanges
@@ -58,7 +58,7 @@ const frontEndDataProvider: Promise<
 export const dataProvider: Promise<[
   DataProvider,
   any[]
-]> = frontEndDataProvider.then(dpr => {
+]> = thisEndDataProvider.then(dpr => {
   const dp = dpr?.dataProvider;
   const realtimeSagas = dpr?.realtimeSagas;
   const provider = dp ? chain(dp, backEndDataProvider) : backEndDataProvider;

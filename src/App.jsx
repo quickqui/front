@@ -42,7 +42,13 @@ class App extends Component {
     }
 
     const functions = model.functionModel?.functions ?? [];
+    const entityNames = (model.domainModel?.entities ?? []).map(
+      entity => entity.name
+    );
+
+    //FIXME 貌似当reference的时候，需要reference to是一个resource。
     const resources = _(functions.map(fun => fun.resource))
+      .concat(entityNames)
       .compact()
       .uniq()
       .value();

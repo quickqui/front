@@ -22,6 +22,7 @@ export function listingFields(entity, model, presentation) {
           return (
             <ReferenceField
               label={property.name}
+              //TODO 协议穿透？ 需要fakedata（以及各种dataprovider）返回xxxx.id形式的relate
               source={property.name + ".id"}
               reference={property.relation.to}
               key={property.name}
