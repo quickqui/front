@@ -7,7 +7,7 @@ function _interopRequireDefault(obj: any) {
 export const resolve = <T extends unknown>(path: string): Promise<T> => {
   if (env.name === "dev_local") {
     return import(
-      `../../prototype/dist/${path}`
+      `../../linkToTestProjectDir/dist/${path}`
       // `../../../../huadahengxinProjects/fake-device-general/dist/${path}`
     ).then(obj => _interopRequireDefault(obj).default as T);
   }

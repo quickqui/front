@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { Admin, Resource } from "react-admin";
 
-import * as _ from "lodash";
+import _ from "lodash";
 
 import { ModelWrapped } from "./Model/Model";
 import Menu from "./View/Menu";
@@ -46,7 +46,6 @@ class App extends Component {
       entity => entity.name
     );
 
-    //FIXME 貌似当reference的时候，需要reference to是一个resource。
     const resources = _(functions.map(fun => fun.resource))
       .concat(entityNames)
       .compact()

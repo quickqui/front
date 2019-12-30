@@ -13,7 +13,7 @@ export interface WithPath<T> {
   object: T;
 }
 
-//FIXME directory节点的path和pathString有问题。
+//NOTE directory节点的path和pathString有问题。但似乎不影响？
 export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
   var tree = {};
   function addNode(obj: WithPath<T>) {
