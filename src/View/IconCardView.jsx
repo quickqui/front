@@ -5,6 +5,8 @@ import IconCard from "../Component/IconCard";
 
 export const IconCardView = props => {
   const  resource  = props['functionModel'].resource;
+    const filter = props["functionModel"]?.query?.filter;
+
   const location = { pathname: resource };
   const basePath = "/" + resource;
   return (
@@ -12,6 +14,7 @@ export const IconCardView = props => {
       location={location}
       basePath={basePath}
       resource={resource}
+      filter={filter}
       {...props}
     >
       {controllerProps => (
