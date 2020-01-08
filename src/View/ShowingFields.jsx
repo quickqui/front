@@ -10,9 +10,25 @@ import {
 import { StringComponent } from "../Component/StringComponent";
 import { scalarField } from "../Component/ScalarField";
 import { SimpleTable } from "../Component/SampleTable";
+import { applyPresentation, rulesHelp } from "./PresentationUtil";
+import { parseRefWithProtocolInsure } from "@quick-qui/model-defines";
+import { resolveWithOutDefault } from "../Resolve";
 
-export function showingFields(entity, model) {
-  return entity.properties.map(property => {
+export function showingFields(entity, model, presentation) {
+  return applyPresentation(presentation, entity.properties).map(property => {
+    const component = rulesHelp(presentation, property).component;
+    if (component) {
+      const { path } = parseRefWithProtocolInsure(component);
+      const ReactComponent = React.lazy(() => resolveWithOutDefault(path));
+      return (
+          <ReactComponent
+            source={property.name}
+            property={property}
+            key={property.name}
+            addLabel={true}
+          />
+      );
+    }
     if (model.isTypeRelation(property)) {
       if (model.isTypeList(property)) {
         return (
@@ -64,6 +80,10 @@ export function showingFields(entity, model) {
       }
     }
 
-    return scalarField({ property, source: property.name, key: property.name });
+    return scalarField({
+      property,
+      source: property.name,
+      key: property.name
+    });
   });
 }

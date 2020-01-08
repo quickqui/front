@@ -26,6 +26,7 @@ class App extends Component {
         this.setState({ ...this.state, dataProvider: dataProvider })
       );
       model.then(data => {
+        //TODO inject implementationGlobals
         this.setState({
           ...this.state,
           model: new ModelWrapped(data)

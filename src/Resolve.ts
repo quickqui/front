@@ -1,15 +1,30 @@
 import { env } from "./Env";
 function _interopRequireDefault(obj: any) {
-  console.log(obj);
-  return obj && obj.__esModule ? obj : { default: obj };
+  return obj?.__esModule || obj?.default ? obj : { default: obj };
 }
-
+//TODO 这里是否应该有repository path，向其他地方一样？
+//不是model机制级别问题，是web对resolve机制的实现能力问题。
 export const resolve = <T extends unknown>(path: string): Promise<T> => {
   if (env.name === "dev_local") {
     return import(
       `../../linkToTestProjectDir/dist/${path}`
       // `../../../../huadahengxinProjects/fake-device-general/dist/${path}`
     ).then(obj => _interopRequireDefault(obj).default as T);
+  }
+  // if (env.name === "dev_docker") {
+  //   return import(`../../../extendDir/dist/${path}`).then(
+  //     obj => _interopRequireDefault(obj).default as T
+  //   );
+  // }
+  throw new Error("Only can resolve an known path");
+};
+
+export const resolveWithOutDefault =<T extends unknown>(path: string): Promise<T> => {
+  if (env.name === "dev_local") {
+    return import(
+      `../../linkToTestProjectDir/dist/${path}`
+      // `../../../../huadahengxinProjects/fake-device-general/dist/${path}`
+    )
   }
   // if (env.name === "dev_docker") {
   //   return import(`../../../extendDir/dist/${path}`).then(
