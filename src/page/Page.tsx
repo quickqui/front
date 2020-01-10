@@ -31,11 +31,11 @@ export function getPage(page: Page, model: ModelWrapped, props: any) {
         presentation: compactList
  */
 
-  const gride = +(page?.layout?.["gride"]) ?? 3;
+  const grid = +(page?.layout?.["grid"]) ?? 3;
   const gridStyle = {
     container: {
       display: "grid",
-      "grid-template-columns": "auto ".repeat(gride).trim()
+      "grid-template-columns": "auto ".repeat(grid).trim()
     },
     item: {
       marginTop: "2em",

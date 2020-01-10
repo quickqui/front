@@ -62,7 +62,8 @@ class Menu extends PureComponent {
           to={"/" + treeNode.object.name}
           primaryText={treeNode.name}
           leftIcon={createElement(
-            icons[treeNode.object?.icon ?? "Label"] ?? icons["Label"]
+            icons[treeNode.object?.icon ?? "ArrowRightAlt"] ??
+              icons["ArrowRightAlt"]
           )}
           onClick={onMenuClick}
           key={treeNode.path}

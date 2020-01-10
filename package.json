@@ -2,6 +2,7 @@
   "name": "quickqui-front",
   "version": "1.0.4",
   "dependencies": {
+    "@material-ui/icons": "^4.5.1",
     "@quick-qui/data-provider": "^1.1.4",
     "@quick-qui/model-defines": "^2.2.0",
     "@types/jest": "^24.0.25",
