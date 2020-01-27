@@ -22,6 +22,7 @@ class App extends Component {
   }
   componentDidMount() {
     onInit().then(() => {
+      //TODO 处理404，也就是model没有，但有logs。，包括要从其他错误中区分出来。
       dp.then(dataProvider =>
         this.setState({ ...this.state, dataProvider: dataProvider })
       );
