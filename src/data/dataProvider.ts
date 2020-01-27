@@ -10,7 +10,8 @@ import {
 } from "@quick-qui/data-provider";
 import { env } from "../Env";
 import {
-  withExchangeModel, parseRefWithProtocolInsure,
+  withExchangeModel,
+  parseRefWithProtocolInsure
 } from "@quick-qui/model-defines";
 
 import _ from "lodash";
@@ -18,7 +19,7 @@ import _ from "lodash";
 const backEndDataProvider: DataProvider = (
   type: string,
   resource: string,
-  params: DataProviderParams
+  params: DataProviderParams<any>
 ) => {
   const json = { type, resource, params };
   return axios.post(`${env.appServerUrl}/dataProvider`, json).then(r => r.data);
@@ -47,7 +48,9 @@ const thisEndDataProvider: Promise<
 
   const providers = exchanges.map(async exchange => {
     //TODO 支持extension以外的方式
-    const dataProvider = await resolve<DataProvider>(parseRefWithProtocolInsure(exchange.extension!).path);
+    const dataProvider = await resolve<DataProvider>(
+      parseRefWithProtocolInsure(exchange.extension!).path
+    );
     return forResource(exchange.resources, dataProvider);
   });
 
