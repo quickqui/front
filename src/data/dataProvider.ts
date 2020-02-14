@@ -50,7 +50,7 @@ const thisEndDataProvider: Promise<
     //TODO 支持extension以外的方式
     //TODO 实现不应该以extension的形式出现，最好是annotation/implementation
     const dataProvider = await resolve<DataProvider>(
-      parseRefWithProtocolInsure(exchange.extension!).path
+      parseRefWithProtocolInsure(exchange.annotations?.["implementation"]!).path
     );
     return forResource(exchange.resources, dataProvider);
   });
