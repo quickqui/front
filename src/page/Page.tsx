@@ -17,7 +17,7 @@ import { FunctionCommand } from "../View/FunctionCommand";
 import { FunctionShow } from "../View/FunctionShow";
 import { IconCardView } from "../View/IconCardView";
 import { findPresentation } from "../View/PresentationUtil";
-import { resolveWithOutDefault, resolve } from "../Resolve";
+import { resolveWithOutDefault } from "../Resolve";
 
 export function getPage(page: Page, model: ModelWrapped, props: any) {
   //TODO 目前只考虑支持流式布局
@@ -98,7 +98,7 @@ function getByFunction(
     let type: any;
     const { protocol, path } = parseRef(baseFunction);
     if (protocol === REF_RESOLVE) {
-      type = React.lazy(()=>resolveWithOutDefault(path));
+      type = React.lazy(() => resolveWithOutDefault(path));
     } else {
       const { category, name } = getNameWithCategory(baseFunction);
       if (category === "provided") {
