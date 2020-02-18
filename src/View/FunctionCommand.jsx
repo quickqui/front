@@ -1,12 +1,12 @@
 import React from "react";
 import { Create, SimpleForm, Toolbar, SaveButton } from "react-admin";
 import { FormPrefill } from "../Component/FormPrefill";
-
+import {withoutAbstract} from '@quick-qui/model-defines'
 import { editingFieldsForCommand } from "./EditingFields";
 const CommandToolbar = props => {
   const { functionModel, model } = props;
   const redirectFunction = functionModel.redirect
-    ? model.functionModel.functions.find(f => f.name === functionModel.redirect)
+    ? withoutAbstract( model.functionModel.functions).find(f => f.name === functionModel.redirect)
     : undefined;
   return (
     <Toolbar {...props}>

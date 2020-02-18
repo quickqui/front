@@ -27,7 +27,6 @@ const FunctionButton = ({ record, page, text }) => {
 
 export const FunctionList = props => {
   const { model, functionModel,presentation } = props;
-  console.log(functionModel);
   const resource = functionModel.resource;
   const location = { pathname: resource };
 

@@ -10,7 +10,8 @@ import {
   Property,
   PageModel,
   PresentationModel,
-  ExchangeModel
+  ExchangeModel,
+  withoutAbstract
 } from "@quick-qui/model-defines";
 import { FunctionModel, Function } from "@quick-qui/model-defines";
 
@@ -43,11 +44,11 @@ export class ModelWrapped {
   }
 
   get entities(): Entity[] {
-    return this.domainModel.entities || [];
+    return (this.domainModel.entities) ?? [];
   }
 
   get functions(): Function[] {
-    return this.functionModel.functions || [];
+    return withoutAbstract(this.functionModel.functions )?? [];
   }
 
   isList(object: any): object is List {

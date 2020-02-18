@@ -22,7 +22,7 @@ const backEndDataProvider: DataProvider = (
   params: DataProviderParams<any>
 ) => {
   const json = { type, resource, params };
-  return axios.post(`${env.appServerUrl}/dataProvider`, json).then(r => r.data);
+  return axios.post(`/app-server/dataProvider`, json).then(r => r.data);
 };
 const thisEndDataProvider: Promise<
   { dataProvider: DataProvider; realtimeSagas: any[] } | undefined

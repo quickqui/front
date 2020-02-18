@@ -4,6 +4,8 @@ import { FormPrefill } from "../Component/FormPrefill";
 
 import { editingFields } from "./EditingFields";
 import * as R from "ramda";
+import { withoutAbstract } from "@quick-qui/model-defines";
+
 
 export const FunctionCreate = props => {
   const { functionModel, model ,presentation} = props;
@@ -11,7 +13,9 @@ export const FunctionCreate = props => {
   const basePath = "/" + resource;
   const entity = (model.entities ?? []).find(R.propEq("name", resource));
   const redirectFunction = functionModel.redirect
-    ? model.functionModel.functions.find(f => f.name === functionModel.redirect)
+    ? withoutAbstract(model.functionModel.functions).find(
+        f => f.name === functionModel.redirect
+      )
     : undefined;
 
   function copyArgsToPrefill() {

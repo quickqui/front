@@ -57,3 +57,12 @@ export function filesToTreeNodes<T>(arr: WithPath<T>[]): TreeNode<T>[] {
   objectToArr(tree);
   return Object.values(tree);
 }
+
+
+export function filterObject(obj: any) {
+  const ret: any = {};
+  Object.keys(obj)
+    .filter(key => obj[key] !== undefined)
+    .forEach(key => (ret[key] = obj[key]));
+  return ret;
+}

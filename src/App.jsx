@@ -10,6 +10,8 @@ import { onInit } from "./life/frontLife";
 
 import customRoutes from "./customRoutes";
 import authProvider from "./authProvider";
+import {withoutAbstract} from '@quick-qui/model-defines'
+
 
 import { model } from "./Model/Model";
 
@@ -43,7 +45,7 @@ class App extends Component {
       return <div>Loading</div>;
     }
 
-    const functions = model.functionModel?.functions ?? [];
+    const functions = withoutAbstract(model.functionModel?.functions) ?? [];
     const entityNames = (model.domainModel?.entities ?? []).map(
       entity => entity.name
     );
