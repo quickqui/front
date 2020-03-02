@@ -3,7 +3,7 @@ const proxy = require("http-proxy-middleware");
 module.exports = function(app) {
     app.use(
       proxy("/model-server", {
-        target: process.env.MODEL_URL || "http://model-server:1111",
+        target: process.env.MODEL_URL || "http://localhost:1111",
         pathRewrite: {
           "^/model-server": "/"
         }

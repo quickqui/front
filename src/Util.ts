@@ -66,3 +66,7 @@ export function filterObject(obj: any) {
     .forEach(key => (ret[key] = obj[key]));
   return ret;
 }
+
+export function no(name: string) {
+  throw new Error(`env not found - ${name}`);
+}

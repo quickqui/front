@@ -8,7 +8,6 @@ import {
   chain,
   forResource
 } from "@quick-qui/data-provider";
-import { env } from "../Env";
 import {
   withExchangeModel,
   parseRefWithProtocolInsure

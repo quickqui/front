@@ -1,28 +1,18 @@
-var path = require ('path');
-var fs = require ('fs');
 const {
-    override,
-    addDecoratorsLegacy,
-    babelInclude,
-    disableEsLint,
-    addBundleVisualizer,overrideDevServer,
+  override,
+  setWebpackStats,
+  addWebpackAlias,
+  overrideDevServer
 } = require("customize-cra");
+const path = require("path");
+const process = require("process");
 
-module.exports = function (config, env) {
-    return Object.assign(config, override(
-        disableEsLint(),
-        // addBundleVisualizer(),
-        addDecoratorsLegacy(),
-        /*Make sure Babel compiles the stuff in the common folder*/
-        babelInclude([
-            path.resolve('src'), // don't forget this
-            path.resolve('/Users/nielinjie/huadahengxinProjects/fake_device/use-quickqui/src')
-        ])
-        )(config, env),overrideDevServer(
-            babelInclude([
-                path.resolve('src'), // don't forget this
-                path.resolve('/Users/nielinjie/huadahengxinProjects/fake_device/use-quickqui/src')
-            ])
-        )(config, env)
-    )
+function alias() {
+  return addWebpackAlias({
+    "@@": path.resolve(__dirname, process.env["EXTEND_PATH"] || ".")
+  });
 }
+module.exports = {
+  webpack: override(alias()),
+  devServer: overrideDevServer(setWebpackStats("verbose"))
+};
