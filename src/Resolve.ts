@@ -16,7 +16,7 @@ export const resolveWithOutDefault = <T extends unknown>(
 ): Promise<T> => {
 
   // if (path.startsWith("@quick-qui/")) {
-  //   return import(`/@/node_modules/${path}`);
+  //   return import(`@@/node_modules/${path}`);
   // }
   return import(`@@/dist/${path}`);
   // throw new Error("Only can resolve an known path");

@@ -20,6 +20,7 @@ export const env: {
       modelUrl: process.env.MODEL_URL || process.env.REACT_APP_MODEL_URL,
       appServerUrl:
         process.env.APP_SERVER_URL || process.env.REACT_APP_SERVER_URL,
+        //TODO 不能支持比model path/node-modules 的情况？
       extendPath:
         (process.env.EXTEND_PATH || process.env.REACT_APP_EXTEND_PATH) ??
         no("EXTEND_PATH")
