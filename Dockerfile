@@ -8,6 +8,6 @@ RUN npm install -qy
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 
-CMD ["npm", "start"]
+CMD ["npm","run" ,"start-without-clean"]
