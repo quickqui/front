@@ -16,6 +16,7 @@ import { FunctionCreate } from "../View/FunctionCreate";
 import { FunctionCommand } from "../View/FunctionCommand";
 import { FunctionShow } from "../View/FunctionShow";
 import { IconCardView } from "../View/IconCardView";
+import {FunctionContinuousEdit} from "../View/FunctionContinuousEdit";
 import { findPresentation } from "../View/PresentationUtil";
 import { resolveWithOutDefault } from "../Resolve";
 
@@ -109,7 +110,8 @@ function getByFunction(
           list: FunctionList,
           show: FunctionShow,
           view: FunctionShow,
-          iconCard: IconCardView
+          iconCard: IconCardView,
+          continuousEdit: FunctionContinuousEdit
         };
         type = mapToType[name];
         if (!type) {

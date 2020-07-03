@@ -18,6 +18,7 @@ export const resolveWithOutDefault = <T extends unknown>(
   // if (path.startsWith("@quick-qui/")) {
   //   return import(`@@/node_modules/${path}`);
   // }
+  //FIXME 从develop server启动到可用非常慢，可能webpack在搜集依赖。需要解决。
   return import(`@@/dist/${path}`);
   // throw new Error("Only can resolve an known path");
 };
