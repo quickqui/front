@@ -10,12 +10,12 @@ import { onInit } from "./life/frontLife";
 
 import customRoutes from "./customRoutes";
 import authProvider from "./authProvider";
-import {withoutAbstract} from '@quick-qui/model-defines'
-
+import { withoutAbstract } from "@quick-qui/model-defines";
 
 import { model } from "./Model/Model";
 
 import { dataProvider as dp } from "./data/dataProvider";
+import autoSavingSaga from "./data/AutoSavingSaga";
 
 class App extends Component {
   constructor() {
@@ -25,14 +25,14 @@ class App extends Component {
   componentDidMount() {
     onInit().then(() => {
       //TODO 处理404，也就是model没有，但有logs。，包括要从其他错误中区分出来。
-      dp.then(dataProvider =>
+      dp.then((dataProvider) =>
         this.setState({ ...this.state, dataProvider: dataProvider })
       );
-      model.then(data => {
+      model.then((data) => {
         //TODO inject implementationGlobals
         this.setState({
           ...this.state,
-          model: new ModelWrapped(data)
+          model: new ModelWrapped(data),
         });
       });
     });
@@ -47,24 +47,25 @@ class App extends Component {
 
     const functions = withoutAbstract(model.functionModel?.functions) ?? [];
     const entityNames = (model.domainModel?.entities ?? []).map(
-      entity => entity.name
+      (entity) => entity.name
     );
 
-    const resources = _(functions.map(fun => fun.resource))
+    const resources = _(functions.map((fun) => fun.resource))
       .concat(entityNames)
       .compact()
       .uniq()
       .value();
+    const sagas = [...dataProvider[1], autoSavingSaga];
     return (
       <Admin
         customRoutes={customRoutes(model)}
         menu={Menu}
         dataProvider={dataProvider[0]}
-        customSagas={dataProvider[1]}
+        customSagas={sagas}
 
         // authProvider={authProvider}
       >
-        {resources.map(resource => {
+        {resources.map((resource) => {
           console.log(resource);
           return (
             <Resource options={{ model }} name={resource} key={resource} />

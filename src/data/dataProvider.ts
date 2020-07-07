@@ -30,7 +30,7 @@ const thisEndDataProvider: Promise<
   const exchanges =
     exchangeModel?.exchanges?.filter((exchange) => {
       //TODO exchange to ==back的时候如何使用realtime？ 应该也可以realtime才对呀。
-      return exchange.to === "front" //&& exchange.from !== "fake";
+      return exchange.to === "front"; //&& exchange.from !== "fake";
       // return exchange.to === "back" //&& exchange.from !== "fake";
     }) ?? [];
   if (_.isEmpty(exchanges)) return undefined;
@@ -46,10 +46,8 @@ const thisEndDataProvider: Promise<
       }
     })
     .flat();
-  console.log(realtimeSagas);
   const providers = exchanges.map(async (exchange) => {
     //TODO 支持extension以外的方式
-    //TODO 实现不应该以extension的形式出现，最好是annotation/implementation
     const dataProvider = await resolve<DataProvider>(
       parseRefWithProtocolInsure(exchange.annotations?.["implementation"]!).path
     );
@@ -59,8 +57,6 @@ const thisEndDataProvider: Promise<
   return Promise.all(providers)
     .then((dataPS) => dataPS.reduce(chain))
     .then((ps) => {
-        console.log(realtimeSagas);
-
       return { dataProvider: ps, realtimeSagas: realtimeSagas };
     });
 })();

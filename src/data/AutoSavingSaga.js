@@ -1,7 +1,8 @@
-import { takeLatest, put, takeEvery, take } from "redux-saga/effects";
+import { takeLatest, put, takeEvery, take, throttle } from "redux-saga/effects";
+import {delay} from 'redux-saga'
 
 export default function* () {
-    yield takeEvery("AUTO_SAVING_ON_CHANGE", saveIt);
+    yield takeLatest( "AUTO_SAVING_ON_CHANGE", saveIt);
 }
 // function* saveIt2{l
 //     console.log('what?')
@@ -39,6 +40,7 @@ export function saveItAction(autoSavingAction) {
 }
 export function* saveIt(autoSavingAction) {
   try {
+    yield delay(1000)
     yield put(saveItAction(autoSavingAction));
   } catch (e) {
     console.error("request error: ", e);
