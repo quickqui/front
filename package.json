@@ -20,7 +20,7 @@
     "graphql-request": "^1.8.2",
     "http-proxy-middleware": "^0.20.0",
     "jexl": "^2.2.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "prop-types": "^15.7.2",
     "ra-realtime": "^2.8.6",
     "ramda": "^0.26.1",
