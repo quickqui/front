@@ -25,7 +25,7 @@
     "ra-realtime": "^2.8.6",
     "ramda": "^0.26.1",
     "react": "^16.13.1",
-    "react-admin": "^2.9.9",
+    "react-admin": "^4.7.0",
     "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
     "react-grid-layout": "^0.17.1",
